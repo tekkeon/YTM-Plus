@@ -1,0 +1,1 @@
+YouTube Music Mini Player extension for Google Chrome browser.

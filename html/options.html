@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YT Music Mini Settings</title>
+  <link rel="stylesheet" type="text/css" href="../css/options.css">
+  <script src="../js/third-party/font_awesome.js"></script>
+</head>
+<body>
+  <h1 class="settings-page-title"><i class="fa fa-cogs" aria-hidden="true"></i>YT Music Mini Settings</h1>
+  <div class="settings-page-container">
+    <div class="settings-section">
+      <h2>Mini Player</h2>
+      <div class="check-option">
+        <div class="checkbox" id="mini-light-theme">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Light theme</h3>
+      </div>
+      <div class="check-option">
+        <div class="checkbox" id="mini-key-control">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Key controls</h3>
+      </div>
+      <p class="check-option-extra">Spacebar: Play/Pause | Up &amp; Down: Volume | Right &amp; Left: Skip</p>
+      <!--<div class="check-option">
+        <div class="checkbox" id="mini-player-new-window">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Open in separate window</h3>
+      </div>
+      <p class="check-option-extra">Note: this is not an always-on-top window, as Google does not allow extensions to do this. If you'd like to enable it to be always on top, check out <a href="https://www.google.com">App1</a> (Windows) or <a href="https://www.google.com">App2</a> (Mac)</p>-->
+    </div>
+    <div class="settings-section">
+      <h2>YouTube Music Website</h2>
+      <div class="check-option">
+        <div class="checkbox" id="yt-light-theme">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Light theme</h3>
+      </div>
+      <div class="check-option">
+        <div class="checkbox" id="yt-notifications">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Notifications on song change</h3>
+      </div>
+      <div class="check-option">
+        <div class="checkbox" id="yt-key-control">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Key controls</h3>
+      </div>
+      <p class="check-option-extra">Note: Adds next and previous song controls not natively built into YTM</p>
+    </div>
+    <div class="settings-section">
+      <h2>Lyrics</h2>
+      <div class="check-option">
+        <div class="checkbox" id="lyrics-enabled">
+          <i class="fa fa-check"></i>
+        </div>
+        <h3>Lyrics enabled</h3>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h2>LastFM</h2>
+      <h3 class="last-fm-user">Loading current user...</h3>
+      <button class="last-fm-button">LastFM Login</button>
+    </div>
+    <button class="save-button">Save</button>
+  </div>
+  <script src="../js/services/Options.js"></script>
+  <script src="../js/third-party/md5.min.js"></script>
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script src="../js/services/LastFM.js"></script>
+  <script src="../js/options_page.js"></script>
+</body>
+</html>
