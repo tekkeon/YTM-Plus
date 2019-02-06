@@ -304,29 +304,10 @@ function toggleQueue() {
   }
 }
 
-function createMiniPlayerWindow() {
-  chrome.windows.create({
-    //url: chrome.extension.getURL('html/popup.html'),
-    url: 'https://music.youtube.com',
-    type: 'popup',
-    width: 260,
-    height: 415
-  }, function(newWindow) {
-    chrome.storage.local.set({'yt-mini-popup-window': newWindow.id})
-    window.close()
-  })
-  //window.close()
-}
-
 function setInitialState (callback) {
   yt.getCurrentTab(function (tabs) {
     State.tabs = tabs
     callback()
-  })
-  chrome.windows.getCurrent(function(window) {
-    if (window.type == "popup") {
-      State.separateWindow = true
-    }
   })
   setInterval(updateTrackInfo, 100);
 };
@@ -354,26 +335,6 @@ function setOptions () {
     if (options['mini-key-control']) {
       window.onkeyup = handleKeyPress;
     }
-
-    /*if (options['mini-player-new-window']) {
-      chrome.storage.local.get('yt-mini-popup-window', function(result) {
-        result = result['yt-mini-popup-window'];
-      
-        if (result) {
-          chrome.windows.get(result, function(windowInfo) {
-            if (!windowInfo) {
-              createMiniPlayerWindow()
-            } 
-            else if (windowInfo.type != 'popup') {
-              window.close()
-              chrome.windows.update(windowInfo.id, {focused: true})
-            }
-          })
-        } else {
-          createMiniPlayerWindow();
-        }
-      })
-    }*/
   })
 }
 

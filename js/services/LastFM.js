@@ -1,18 +1,18 @@
 class LastFM {
   authorizeUser() {
     const redirect_url = chrome.extension.getURL("html/options.html")
-    var url = 'http://www.last.fm/api/auth/?api_key=' + this.api_key + '&cb=' + redirect_url;
+    var url = 'http://www.last.fm/api/auth/?api_key=' + config.api_key + '&cb=' + redirect_url;
     window.location = url;
   }
 
   finishAuth(token) {
     var data = {
-      api_key: this.api_key,
+      api_key: config.api_key,
       method: "auth.getSession",
       token: token
     }
     var api_sig = this.generateSignature(data)
-    var url = 'https://ws.audioscrobbler.com/2.0/?method=auth.getSession&api_key=' + this.api_key + '&token=' + token + '&api_sig=' + api_sig + '&format=json'
+    var url = 'https://ws.audioscrobbler.com/2.0/?method=auth.getSession&api_key=' + config.api_key + '&token=' + token + '&api_sig=' + api_sig + '&format=json'
 
     var xhr;
     xhr = new XMLHttpRequest();
@@ -43,7 +43,7 @@ class LastFM {
     st.forEach(function(std){
         ss = ss + std + data[std];
     });
-    var signature = md5(unescape(encodeURIComponent(ss + this.secret)));
+    var signature = md5(unescape(encodeURIComponent(ss + config.secret)));
     return signature;
   }
 
@@ -62,7 +62,7 @@ class LastFM {
     var d = new Date();
     var n = d.getTime()/1000;
     var data = {
-      api_key: this.api_key,
+      api_key: config.api_key,
       method: "track.scrobble",
       sk: userInfo.key,
       artist: trackInfo.artist,
@@ -72,7 +72,7 @@ class LastFM {
     }
     var api_sig = this.generateSignature(data)
     var url = 'https://ws.audioscrobbler.com/2.0/?method=track.scrobble&' +
-      'api_key=' + this.api_key +
+      'api_key=' + config.api_key +
       '&api_sig=' + api_sig +
       '&sk=' + userInfo.key +
       '&artist=' + encodeURIComponent(trackInfo.artist) +
@@ -89,7 +89,7 @@ class LastFM {
 
   loveTrack(userInfo, trackInfo) {
     var data = {
-      api_key: this.api_key,
+      api_key: config.api_key,
       method: "track.love",
       sk: userInfo.key,
       artist: trackInfo.artist,
@@ -97,7 +97,7 @@ class LastFM {
     }
     var api_sig = this.generateSignature(data)
     var url = 'https://ws.audioscrobbler.com/2.0/?method=track.love&' +
-      'api_key=' + this.api_key +
+      'api_key=' + config.api_key +
       '&api_sig=' + api_sig +
       '&sk=' + userInfo.key +
       '&artist=' + encodeURIComponent(trackInfo.artist) +
@@ -112,7 +112,7 @@ class LastFM {
 
   unloveTrack(userInfo, trackInfo) {
     var data = {
-      api_key: this.api_key,
+      api_key: config.api_key,
       method: "track.unlove",
       sk: userInfo.key,
       artist: trackInfo.artist,
@@ -120,7 +120,7 @@ class LastFM {
     }
     var api_sig = this.generateSignature(data)
     var url = 'https://ws.audioscrobbler.com/2.0/?method=track.unlove&' +
-      'api_key=' + this.api_key +
+      'api_key=' + config.api_key +
       '&api_sig=' + api_sig +
       '&sk=' + userInfo.key +
       '&artist=' + encodeURIComponent(trackInfo.artist) +

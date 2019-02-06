@@ -44,7 +44,6 @@
     "web_accessible_resources": [
         "html/options.html",
         "css/youtube_music_light.css",
-        "html/popupWindow.html",
         "css/popup.css",
         "assets/*",
         "js/*",
