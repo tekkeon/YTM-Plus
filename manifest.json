@@ -32,7 +32,7 @@
             ],
             "js": [
                 "js/services/Options.js",
-                "js/third-party/md5.min.js",
+                "js/third-party/md5.js",
                 "config.js",
                 "js/services/LastFM.js",
                 "js/youtube_page.js"
