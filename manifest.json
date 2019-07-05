@@ -38,6 +38,14 @@
                 "js/youtube_page.js"
             ],
             "run_at": "document_end"
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "js/persistent_popup.js"
+            ],
+            "run_at": "document_end"
         }
     ],
     "options_page": "html/options.html",
