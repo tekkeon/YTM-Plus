@@ -260,6 +260,10 @@ body.expanded {
   overflow-y: scroll;
 }
 
+.queue::-webkit-scrollbar {
+  width: 0 !important;
+}
+
 .queue-header {
   width: 260px;
   height: 40px;
@@ -356,6 +360,10 @@ body.expanded {
   height: 395px;
   overflow-y: scroll;
   display: none;
+}
+
+.lyrics-panel::-webkit-scrollbar {
+  width: 0 !important;
 }
 
 .lyrics-panel.active {
