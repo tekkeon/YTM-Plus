@@ -446,6 +446,7 @@ body.expanded {
   background: transparent;
   transform: rotate(-90deg);
   color: #8e8e8e;
+  border-style: solid;
   border-color: #8e8e8e;
   border-bottom: none;
   outline: none;
