@@ -14,7 +14,6 @@ const initializePlayerHandlers = () => {
         break;
 
       case MessageType.PLAY_PAUSE:
-        console.log('Play Pause Track message received')
         handlePlayPauseTrack();
         break;
 

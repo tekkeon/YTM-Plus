@@ -11,41 +11,6 @@ export const openTab = () => {
   });
 };
 
-// export const createThemeCSS = (theme: YTMTheme = DefaultYTMTheme) => `
-//   html * {
-//     --ytmusic-nav-bar: ${theme.headerBackground} !important;
-//     --ytmusic-text-primary: ${theme.primaryText} !important;
-//     --yt-endpoint-color: ${theme.primaryText} !important;
-//     --yt-spec-text-primary: ${theme.primaryText} !important;
-//     --ytmusic-menu-item-icon_-_fill: ${theme.primaryText} !important;
-//     --ytmusic-subtitle-1_-_color: ${theme.secondaryText} !important;
-//     --ytmusic-subtitle-1_-_--yt-endpoint-hover-color: ${theme.secondaryText} !important;
-//     --ytmusic-subtitle-1_-_--yt-endpoint-visited-color: ${theme.secondaryText} !important;
-//     --ytmusic-text-secondary: ${theme.secondaryText} !important;
-//     --ytmusic-background: ${theme.background} !important;
-//     --ytmusic-brand-background-solid: ${theme.headerBackground} !important;
-//     --iron-icon-fill-color: ${theme.primaryButton} !important;
-//     --ytmusic-text-primary: ${theme.primaryText} !important;
-//   }
-
-//   .title.text.ytmusic-carousel-shelf-basic-header-renderer {
-//     color: ${theme.accent} !important;
-//   }
-
-//   .center-content.ytmusic-nav-bar {
-//     background-color: ${theme.headerBackground};
-//     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.164)
-//   }
-
-//   .subtitle.ytmusic-two-row-item-renderer {
-//     color: ${theme.secondaryText} !important;
-//   }
-
-//   #contents {
-//     background: ${theme.background} !important;
-//   }
-// `
-
 export const createThemeCSS = (theme?: YTMTheme | null) => {
   if (!theme) {
     return '';
@@ -360,7 +325,3 @@ export const createThemeCSS = (theme?: YTMTheme | null) => {
     }
   `);
 }
-
-// .style-scope.ytmusic-shelf-renderer, .title.style-scope.ytmusic-responsive-list-item-renderer {
-//   color: black !important;
-// }

@@ -56,6 +56,7 @@ export function initializeHostMessageHandler(id: string) {
             playerState: message.payload
           })
         }
+        break;
     }
   })
 };

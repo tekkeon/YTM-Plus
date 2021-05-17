@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((message: Message, sender) => {
     console.log('Setting tab id:', message.payload)
     setTabId(message.payload);
   }
-})
+});
 
 ReactDOM.render(
   <Sync />,

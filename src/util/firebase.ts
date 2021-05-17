@@ -47,23 +47,17 @@ export const subscribeToSession = (id: string, name: string, messageHandler: (da
   });
 
   if (name !== 'HOST') {
-    sessionRef.once('value', (snapshot) => {
-      const data: Session = snapshot.val();
-      data.viewers ? data.viewers.push(name) : data.viewers = [name];
-      sessionRef.set(data);
-    });
+    const listenerId = nanoid();
+    const sessionListenersRef = sessionRef.child(`listeners/${listenerId}`);
+    sessionListenersRef.set(name);
+
+    return listenerId;
   }
 }
 
-export const unsubscribeFromSession = (id: string, name: string | null) => {
-  const sessionRef = app.database().ref('sessions/' + id);
-
-  sessionRef.once('value', (snapshot) => {
-    const session: Session = snapshot.val();
-    const viewerName = name ?? 'Anon Viewer';
-    session.viewers ? session.viewers.push(viewerName) : session.viewers = [viewerName];
-    sessionRef.set(session);
-  })
+export const unsubscribeFromSession = (sessionId: string, listenerId: string) => {
+  const sessionViewerRef = app.database().ref(`sessions/${sessionId}/listeners/${listenerId}`);
+  sessionViewerRef.remove();
 }
 
 export default app;

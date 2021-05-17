@@ -4,24 +4,20 @@ import { getSongInfo, getPlayerState } from './shared';
 import { Message } from 'src/types';
 
 const scrobbledTracks = new Set();
-var modal: HTMLElement | null;
 
 // Mix of event listeners and MutationObservers
 const initializeChangeEmitters = () => {
-  modal = document.getElementById('youtube-music-mini-modal');
-
   // Update song info on title change
-  const titleElement = document.querySelector('.title.ytmusic-player-bar');
-  const titleObserver = new MutationObserver(() => {
+  const songInfoObserver = new MutationObserver(() => {
     updateSongInfo();
-    console.log('Updating song info');
   });
-  titleElement && titleObserver.observe(titleElement, { attributeFilter: ['title'] });
+
+  const titleElement = document.querySelector('.title.ytmusic-player-bar');
+  titleElement && songInfoObserver.observe(titleElement, { attributeFilter: ['title'] });
 
   // Update player state on play/pause, track progress, like/dislike, and volume
   const playerStateObserver = new MutationObserver(() => {
     updatePlayerState();
-    console.log('Updating player state');
   });
 
   const playPauseElement = document.querySelector('.play-pause-button');
@@ -48,22 +44,9 @@ const initializeChangeEmitters = () => {
     messaging.sendToRuntime({ type: MessageType.DISLIKE_TRACK, payload: isDisliked });
   })
 
-  setInterval(function() {
-    try {
-      var time = document.querySelector(".time-info")?.textContent?.split(' / ')
-
-      if (time) {
-        var curTimeSec = parseInt(time[0].split(':')[0])*60 + parseInt(time[0].split(':')[1])
-        var endTimeSec = parseInt(time[1].split(':')[0])*60 + parseInt(time[1].split(':')[1])
-    
-        if (curTimeSec/endTimeSec > 0.5) {
-          scrobbleTrack()
-        }
-      }
-    } catch(e) {
-      return
-    }
-  }, 1000)
+  setInterval(() => {
+    tryScrobble();
+  }, 5000);
 }
 
 const updateSongInfo = () => {
@@ -74,10 +57,6 @@ const updateSongInfo = () => {
   }
 
   messaging.sendToRuntime(message).catch(null);
-
-  modal?.dispatchEvent(new CustomEvent('message', {
-    detail: message
-  }))
 }
 
 const updatePlayerState = () => {
@@ -88,10 +67,23 @@ const updatePlayerState = () => {
   };
 
   messaging.sendToRuntime(message).catch(null);
+}
+
+const tryScrobble = () => {
+  try {
+    var time = document.querySelector(".time-info")?.textContent?.split(' / ')
+
+    if (time) {
+      var curTimeSec = parseInt(time[0].split(':')[0])*60 + parseInt(time[0].split(':')[1])
+      var endTimeSec = parseInt(time[1].split(':')[0])*60 + parseInt(time[1].split(':')[1])
   
-  modal?.dispatchEvent(new CustomEvent('message', {
-    detail: message
-  }))
+      if (curTimeSec/endTimeSec > 0.5) {
+        scrobbleTrack()
+      }
+    }
+  } catch(e) {
+    return
+  }
 }
 
 const scrobbleTrack = () => {

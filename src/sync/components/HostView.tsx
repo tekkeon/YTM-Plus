@@ -32,10 +32,11 @@ export default function HostView() {
           <>
             <Label>Session ID</Label>
             <Value>{sessionId}</Value>
-            <Label>Viewers</Label>
+            <Label>Listeners</Label>
             {
-              session?.viewers?.length ?
-                session.viewers.map(viewer => <Value>{viewer}</Value>) :
+              session?.listeners &&
+                Object.keys(session.listeners).length ?
+                  Object.keys(session.listeners).map(id => <Value>{session.listeners[id]}</Value>) :
                 <Value>N/A</Value>
             }
           </>

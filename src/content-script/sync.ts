@@ -73,6 +73,9 @@ const handleRemoteSessionUpdated: MessageHandler = (payload: Session) => {
   }
 
   if (payload?.songInfo?.id && !window.location.href.includes(payload.songInfo.id)) {
+    if (playerState.isPlaying) {
+      (document.querySelector('.play-pause-button') as HTMLElement).click();
+    }
     window.location.href = `https://music.youtube.com/watch?v=${payload?.songInfo?.id}&viewer=true`;
   }
 }
@@ -92,7 +95,6 @@ const handleSetTabAsViewer: MessageHandler = () => {
   }
 
   timeoutRef = setTimeout(() => {
-    console.log('Removing viewer banner');
     const viewerBanner = document.getElementsByClassName('viewer-banner')[0];
     document.body.removeChild(viewerBanner);
   }, 2000);

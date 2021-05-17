@@ -12,13 +12,25 @@ interface ColorSelectorProps {
 export default function ColorSelector({ onChange, label, id, color }: ColorSelectorProps) {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [currentColor, setCurrentColor] = useState(color);
+  const pickerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
-    setCurrentColor(color)
-  }, [color])
+    setCurrentColor(color);
+  }, [color]);
+
+  useEffect(() => {
+    const handleClickEvent = (e: MouseEvent) => {
+      if (e.target && !pickerRef.current?.contains(e.target as Node)) {
+        setShowColorPicker(false);
+      }
+    }
+
+    document.body.addEventListener('click', handleClickEvent);
+    return () => document.body.removeEventListener('click', handleClickEvent);
+  });
 
   return (
-    <ColorSelectorStyled>
+    <ColorSelectorStyled ref={pickerRef}>
       <div className="flex">
         <label htmlFor={id}>{label}: </label>
         <ColorDot color={color} onClick={() => setShowColorPicker(!showColorPicker)}></ColorDot>
@@ -63,6 +75,5 @@ const ColorDot = styled.div`
 const ChromePickerStyled = styled(ChromePicker)`
   position: absolute;
   top: 25px;
-  right: 0px;
   z-index: 1;
 `

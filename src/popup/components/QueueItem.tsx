@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ytmMiniLogo from '../../assets/128-icon.png';
+import imageComingSoon from '../../assets/image-coming-soon.png';
 
 interface QueueItemProps {
   imageUrl: string
@@ -13,6 +14,10 @@ interface QueueItemProps {
 }
 
 export default function QueueItem({ imageUrl, title, artist, time, active, onClick }: QueueItemProps) {
+  if (!imageUrl.match(/https:\/\/.*\.com\/.*/)) {
+    imageUrl = imageComingSoon;
+  }
+
   return (
     <QueueItemStyled active={active} onClick={onClick}>
       <img className="queue-item-image" src={(!active && imageUrl) || ytmMiniLogo} />
@@ -31,7 +36,6 @@ interface QueueItemsStyledProps {
 
 const QueueItemStyled = styled.div<QueueItemsStyledProps>`
   height: 50px;
-  width: 95%;
   margin: auto;
   padding: 5px 0px;
   border-bottom: 1px solid rgb(107, 107, 107);

@@ -7,6 +7,7 @@ import { Session } from 'src/types';
 
 export default function ViewerView() {
   const [sessionId, setSessionId] = useState('');
+  const [listenerId, setListenerId] = useState<undefined | string>();
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState(false);
   const [session, setSession] = useState<Session>();
@@ -14,18 +15,29 @@ export default function ViewerView() {
   
   const onJoinSession = () => {
     setLoading(true);
-    subscribeToSession(sessionId, viewerName, (session) => {
+
+    const listener = subscribeToSession(sessionId, viewerName, (session) => {
       setLoading(false);
       setSession(session);
       setConnected(true);
       handleRemoteSessionUpdate(session);
       setTabAsViewer();
     });
+    
+    setListenerId(listener);
   }
 
   useEffect(() => {
-    return () => unsubscribeFromSession(sessionId, null)
-  }, []);
+    if (!listenerId) {
+      return;
+    }
+
+    window.onbeforeunload = () => {
+      unsubscribeFromSession(sessionId, listenerId)
+    };
+  
+    return () => unsubscribeFromSession(sessionId, listenerId)
+  }, [listenerId, sessionId]);
   
   return (
     <div>

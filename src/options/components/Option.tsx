@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface OptionProps {
   checked: boolean;
@@ -14,7 +15,7 @@ export default function Option({ onClick, title, checked, description }: OptionP
     <OptionCheckStyled checked={checked}>
       <div className="main">
         <div className="checkbox" onClick={onClick}>
-          <i className="fa fa-check" aria-hidden="true" />
+          <CheckMarkIcon icon={faCheck} />
         </div>
         <h3>{title}</h3>
       </div>
@@ -59,4 +60,10 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
     height: 15px;
     width: 15px;
   }
+`
+
+const CheckMarkIcon = styled(FontAwesomeIcon)`
+  color: white;
+  margin: 1.5px;
+  display: block;
 `

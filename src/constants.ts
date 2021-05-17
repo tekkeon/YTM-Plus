@@ -26,7 +26,7 @@ export const enum MessageType {
 
 export const DefaultMiniDarkTheme: MiniTheme = {
   primaryText: '#ffffff',
-  secondaryText: '#777777',
+  secondaryText: '#b1b1b1',
   backgroundColor: '#1d1d1d',
   footerBackgroundColor: '#282828',
   primaryButton: '#dddddd',

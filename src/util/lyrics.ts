@@ -16,12 +16,13 @@ const extractLyrics = (response: any, artist: string, track: string) => {
       var info = response.result[i]
       console.log(info)
       if (isMatch(info.artist.toLowerCase().trim(), artist.toLowerCase().trim(), info.title.toLowerCase().trim(), track.toLowerCase().trim())) {
-        return info.lyrics.replace(/(?:\r\n|\r|\n)/g, '\n\n');
+        const decodedLyrics = decodeLyrics(info.lyrics);
+        return (decodedLyrics as string).split(/(?:\r\n|\r|\n)/).filter(lyric => lyric && lyric.length);
       }
     }
   }
 
-  return "No lyrics found."
+  return null;
 }
 
 const isMatch = (artist1: string, artist2: string, title1: string, title2: string) => {
@@ -55,4 +56,10 @@ const isMatch = (artist1: string, artist2: string, title1: string, title2: strin
   })
 
   return artistMatches && titleMatches;
+}
+
+export const decodeLyrics = (html: string) => {
+  var txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
 }

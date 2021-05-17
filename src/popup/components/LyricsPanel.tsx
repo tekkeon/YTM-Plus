@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
-import config from '../../config';
 import { useSongInfo } from '../../contexts/SongInfoContext';
 import { NetworkState } from '../../types';
 import { getLyrics } from '../../util/lyrics';
+
+const renderLyrics = (lyrics: string[]) => {
+  return lyrics.map(lyric => {
+    if (lyric.match(/\[.*\]/)) {
+      return (
+        <LyricHeader>
+          { lyric.substr(1, lyric.length - 2) }
+        </LyricHeader>
+      )
+    } else {
+      return (
+        <Lyric>
+          { lyric }
+        </Lyric>
+      )
+    }
+  });
+}
 
 export default function LyricsPanel() {
   const [lyrics, setLyrics] = useState<NetworkState>({
@@ -19,12 +36,12 @@ export default function LyricsPanel() {
     setLyrics({ ...lyrics, loading: true });
 
     getLyrics(artist, track)
-      .then((lyrics) => {
+      .then((lyricsResult) => {
         console.log(lyrics);
         setLyrics({
           ...lyrics,
           loading: false,
-          data: lyrics
+          data: lyricsResult
         })
       }).catch((e) => {
         setLyrics({
@@ -44,7 +61,7 @@ export default function LyricsPanel() {
         ? <div className="loader"></div>
         : lyrics.error
         ? <div>:(</div>
-        : <p>{lyrics.data}</p>
+        : <>{lyrics?.data ? renderLyrics(lyrics.data) : <NoLyrics>No lyrics found.</NoLyrics>}</>
       }
     </StyledLyricsPanel>
   )
@@ -75,28 +92,11 @@ const StyledLyricsPanel = styled.div`
     font-size: 12px;
     margin-top: 2px;
 
-    a:visited {
+    a, a:visited {
       color: #8f8f8f;
       font-weight: 400;
       font-size: 12px;
       margin-top: 2px;
-    }
-  }
-
-  p {
-    max-width: 90%;
-    margin: 20px auto;
-    color: rgb(224, 224, 224);
-
-    &.no-results {
-      text-align: center;
-      color: rgb(172, 172, 172);
-      margin-top: 40px;
-    }
-
-    br {
-      display: block;
-      margin: 5px 0;
     }
   }
 
@@ -111,4 +111,29 @@ const StyledLyricsPanel = styled.div`
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
   }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`
+
+const LyricHeader = styled.h3`
+  color: ${props => props.theme.progressColor};
+  font-size: 15px;
+  margin: 20px 20px 10px;
+  font-style: italic;
+`
+
+const Lyric = styled.p`
+  color: white;
+  margin: 10px 20px;
+  font-size: 14px;
+  font-weight: 300;
+`
+
+const NoLyrics = styled.p`
+  color: white;
+  font-size: 14px;
+  text-align: center;
 `

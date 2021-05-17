@@ -1,5 +1,10 @@
 import { MessageType } from './constants';
 
+export interface LastFMSession {
+  key: string;
+  name: string;
+}
+
 export interface MiniTheme {
   primaryText: string;
   secondaryText: string;
@@ -70,7 +75,7 @@ export interface Session {
   playerState?: PlayerState
   url?: string;
   songInfo?: Partial<SongInfo>;
-  viewers?: string[]
+  listeners?: any;
 }
 
 export interface SongInfo {

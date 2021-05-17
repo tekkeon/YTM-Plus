@@ -42,7 +42,7 @@ export const getPlayerState = (): PlayerState => {
   }
 }
 
-const getQueueItems = (retry?: boolean): QueueItem[] => {
+const getQueueItems = (): QueueItem[] => {
   const queue = [...document.querySelectorAll('.side-panel.modular ytmusic-player-queue-item')].map(function(itemElement) {
     const itemTitle = itemElement.getElementsByClassName('song-title')[0].textContent ?? '';
     const itemArtist = itemElement.getElementsByClassName('byline')[0].textContent ?? '';
@@ -57,29 +57,5 @@ const getQueueItems = (retry?: boolean): QueueItem[] => {
     return queueItem;
   });
 
-  // if (!queue[0].src.includes('googleusercontent.com') && retry) {
-  //   return promisify(() => {
-  //     scrollQueue();
-  //     return getQueueItems(false);
-  //   });
-  // }
-
   return queue;
-}
-
-const scrollQueue = (callback: () => void) => {
-  // var queue = document.querySelector('.queue');
-  // var originalScroll = queue.scrollTop
-
-  // queue.scrollTop = queue.scrollHeight - queue.clientHeight;
-
-  // var scroller = setInterval(() => {
-  //   queue.scrollTop = queue.scrollTop - 100;
-  // }, 10)
-
-  // setTimeout(() => {
-  //   clearInterval(scroller);
-  //   queue.scrollTop = originalScroll;
-  //   callback()
-  // }, 1200);
 }

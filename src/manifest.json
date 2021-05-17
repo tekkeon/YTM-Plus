@@ -1,19 +1,18 @@
 {
   "manifest_version": 2,
-  "name": "YT Music Mini for YouTube™ Music",
-  "description": "Control YouTube™ Music from anywhere in Chrome with a mini player! Now with Media Controls, Lyrics, LastFM, light theme, and more!",
-  "version": "2.1.0",
+  "name": "YTM+ for YouTube™ Music",
+  "description": "Control your YouTube Music anywhere in Chrome with a mini player, lyrics, LastFM, and more!",
+  "version": "3.0.0",
   "browser_action": {
    "default_icon": "assets/128-icon.png",
    "default_popup": "html/popup.html"
   },
   "permissions": [
-      "tabs",
       "storage",
       "https://music.youtube.com/*",
       "notifications"
   ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'self'",
   "icons": {
       "16": "assets/16-icon.png",
       "48": "assets/48-icon.png",

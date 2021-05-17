@@ -4,6 +4,35 @@ import HostView from './components/HostView';
 import ViewerView from './components/ViewerView';
 import { Button } from './components/Styled';
 
+enum UserType {
+  HOST,
+  VIEWER
+}
+
+export default function Modal() {
+  const [userType, setUserType] = useState<UserType | null>(null);
+
+  return (
+    <ModalStyled>
+      <h2 className="handle">Listen with Friends</h2>
+      {
+        userType !== null && <BackButton onClick={() => setUserType(null)}>←</BackButton>
+      }
+      {
+        userType === UserType.HOST ?
+          <HostView /> :
+        userType === UserType.VIEWER ?
+          <ViewerView /> :
+          <div className="buttons">
+            <Button onClick={() => setUserType(UserType.HOST)} centered>Create Session</Button>
+            <p>or</p>
+            <Button onClick={() => setUserType(UserType.VIEWER)} centered>Join Session</Button>
+          </div>
+      }
+    </ModalStyled>
+  )
+}
+
 const ModalStyled = styled.div`
   backdrop-filter: blur(5px);
   background-color: #292929;
@@ -44,32 +73,3 @@ const BackButton = styled.button`
   position: absolute;
   top: 14px;
 `
-
-enum UserType {
-  HOST,
-  VIEWER
-}
-
-export default function Modal() {
-  const [userType, setUserType] = useState<UserType | null>(null);
-
-  return (
-    <ModalStyled>
-      <h2 className="handle">Listen with Friends</h2>
-      {
-        userType !== null && <BackButton onClick={() => setUserType(null)}>←</BackButton>
-      }
-      {
-        userType === UserType.HOST ?
-          <HostView /> :
-        userType === UserType.VIEWER ?
-          <ViewerView /> :
-          <div className="buttons">
-            <Button onClick={() => setUserType(UserType.HOST)} centered>Create Session</Button>
-            <p>or</p>
-            <Button onClick={() => setUserType(UserType.VIEWER)} centered>Join Session</Button>
-          </div>
-      }
-    </ModalStyled>
-  )
-}
