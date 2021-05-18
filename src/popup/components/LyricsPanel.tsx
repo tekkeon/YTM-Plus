@@ -126,14 +126,14 @@ const LyricHeader = styled.h3`
 `
 
 const Lyric = styled.p`
-  color: white;
+  color: ${props => props.theme.secondaryText};
   margin: 10px 20px;
   font-size: 14px;
   font-weight: 300;
 `
 
 const NoLyrics = styled.p`
-  color: white;
+  color: ${props => props.theme.secondaryText};
   font-size: 14px;
   text-align: center;
 `

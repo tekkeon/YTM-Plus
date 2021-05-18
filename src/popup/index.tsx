@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import '../util/analytics';
 
 import Popup from './Popup';
 import useStorage from '../hooks/useStorage';

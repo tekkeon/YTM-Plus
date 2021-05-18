@@ -4,11 +4,10 @@ import useStorage from '../hooks/useStorage';
 import Option from './components/Option';
 import { LastFMSession, Options } from 'src/types';
 import { authorizeUser, finishAuth } from '../util/lastFM';
-import PopupThemeEditor from './components/PopupThemeEditor';
-import YTMThemeEditor from './components/YTMThemeEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { DefaultMiniDarkTheme, DefaultMiniLightTheme, DefaultYTMTheme } from '../constants';
 
 export default function Options() {
   const { result: options, set: setOptions } = useStorage<Options>('options');
@@ -36,6 +35,13 @@ export default function Options() {
     setOptions(newOptions)
   };
 
+  const handlePopupLightTheme = () => {
+    setOptions({
+      ...options,
+      miniTheme: options.miniTheme == DefaultMiniLightTheme ? DefaultMiniDarkTheme : DefaultMiniLightTheme
+    })
+  }
+
   return (
     <OptionsStyled>
       <h1 className='settings-page-title'><FontAwesomeIcon icon={faCogs} />&nbsp;&nbsp;YT Music Mini Settings</h1>
@@ -47,7 +53,10 @@ export default function Options() {
             checked={options?.miniKeyControl}
             description='Spacebar: Play/Pause | Up &amp; Down: Volume | Right &amp; Left: Skip'
             onClick={() => handleCheckboxClick('miniKeyControl')} />
-          <p className='check-option-extra'></p>
+          <Option
+            title='Light theme for Mini Player'
+            checked={options?.miniTheme == DefaultMiniLightTheme}
+            onClick={handlePopupLightTheme} />
         </div>
         <div className='settings-section'>
           <h2>YouTube Music Website</h2>
@@ -66,14 +75,6 @@ export default function Options() {
           <h2>LastFM</h2>
           <h3 className='last-fm-user'>{lastFMSession?.name ?? 'No logged-in user.'}</h3>
           <button className='last-fm-button' onClick={authorizeUser}>LastFM Login</button>
-        </div>
-        <div className='settings-section'>
-          <h2>Beta: Mini Player Theme</h2>
-          <PopupThemeEditor />
-        </div>
-        <div className='settings-section'>
-          <h2>Beta: YouTube Music Theme</h2>
-          <YTMThemeEditor showPopupButton />
         </div>
       </div>
     </OptionsStyled>

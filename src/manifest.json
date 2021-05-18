@@ -12,7 +12,7 @@
       "https://music.youtube.com/*",
       "notifications"
   ],
-  "content_security_policy": "script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'self'",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "icons": {
       "16": "assets/16-icon.png",
       "48": "assets/48-icon.png",
