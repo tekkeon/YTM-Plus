@@ -21,6 +21,7 @@ export const enum MessageType {
   SET_VOLUME,
   SKIP_TRACK,
   SONG_UPDATED,
+  SPOTIFY_TO_YTM,
   YTM_THEME_UPDATED,
 }
 

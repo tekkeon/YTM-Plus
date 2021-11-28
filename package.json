@@ -61,6 +61,7 @@
     "react-ga": "^3.3.0",
     "simple-peer": "^9.9.3",
     "socket.io-client": "^3.1.2",
+    "spotify-web-api-js": "^1.5.1",
     "styled-components": "^5.2.1",
     "util": "^0.12.3"
   }

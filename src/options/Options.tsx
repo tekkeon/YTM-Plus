@@ -1,83 +1,99 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import useStorage from '../hooks/useStorage';
-import Option from './components/Option';
-import { LastFMSession, Options } from 'src/types';
-import { authorizeUser, finishAuth } from '../util/lastFM';
-import PopupThemeEditor from './components/PopupThemeEditor';
-import YTMThemeEditor from './components/YTMThemeEditor';
+import React, { useEffect } from "react";
+import { faCogs } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { authorizeUser, finishAuth } from "../util/lastFM";
+import Option from "./components/Option";
+import PopupThemeEditor from "./components/PopupThemeEditor";
+import { LastFMSession, Options } from "../types";
+import useStorage from "../hooks/useStorage";
+import YTMThemeEditor from "./components/YTMThemeEditor";
 
 export default function Options() {
-  const { result: options, set: setOptions } = useStorage<Options>('options');
-  const { result: lastFMSession, set: setLastFMSession } = useStorage<LastFMSession>('lastfm-info');
+  const { result: options, set: setOptions } = useStorage<Options>("options");
+  const { result: lastFMSession, set: setLastFMSession } =
+    useStorage<LastFMSession>("lastfm-info");
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
+    const token = urlParams.get("token");
 
     console.log(token);
 
     if (token) {
-      finishAuth(token)
-        .then(setLastFMSession)
-        .catch(console.log)
+      finishAuth(token).then(setLastFMSession).catch(console.log);
     }
-  }, [])
+  }, []);
 
   const handleCheckboxClick = (id: keyof Options) => {
     const newOptions = {
       ...options,
-      [id]: !options[id]
-    }
+      [id]: !options[id],
+    };
 
-    setOptions(newOptions)
+    setOptions(newOptions);
   };
 
   return (
     <OptionsStyled>
-      <h1 className='settings-page-title'><FontAwesomeIcon icon={faCogs} />&nbsp;&nbsp;YT Music Mini Settings</h1>
-      <div className='settings-page-container'>
-        <div className='settings-section'>
+      <h1 className="settings-page-title">
+        <FontAwesomeIcon icon={faCogs} />
+        &nbsp;&nbsp;YT Music Mini Settings
+      </h1>
+      <div className="settings-page-container">
+        <div className="settings-section">
           <h2>Mini Player</h2>
           <Option
-            title='Key controls'
+            title="Key controls"
             checked={options?.miniKeyControl}
-            description='Spacebar: Play/Pause | Up &amp; Down: Volume | Right &amp; Left: Skip'
-            onClick={() => handleCheckboxClick('miniKeyControl')} />
-          <p className='check-option-extra'></p>
+            description="Spacebar: Play/Pause | Up &amp; Down: Volume | Right &amp; Left: Skip"
+            onClick={() => handleCheckboxClick("miniKeyControl")}
+          />
+          <p className="check-option-extra"></p>
         </div>
-        <div className='settings-section'>
+        <div className="settings-section">
           <h2>YouTube Music Website</h2>
-          <Option title='Notifications on song change' checked={options?.notifications} onClick={() => handleCheckboxClick('notifications')} />
           <Option
-            title='Key controls'
-            description='Adds next and previous song controls with arrow keys when on YouTube Music page'
+            title="Notifications on song change"
+            checked={options?.notifications}
+            onClick={() => handleCheckboxClick("notifications")}
+          />
+          <Option
+            title="Key controls"
+            description="Adds next and previous song controls with arrow keys when on YouTube Music page"
             checked={options?.ytmKeyControl}
-            onClick={() => handleCheckboxClick('ytmKeyControl')} />
+            onClick={() => handleCheckboxClick("ytmKeyControl")}
+          />
         </div>
-        <div className='settings-section'>
+        <div className="settings-section">
           <h2>Lyrics</h2>
-          <Option title='Lyrics enabled' checked={options?.lyrics} onClick={() => handleCheckboxClick('lyrics')} />
+          <Option
+            title="Lyrics enabled"
+            checked={options?.lyrics}
+            onClick={() => handleCheckboxClick("lyrics")}
+          />
         </div>
-        <div className='settings-section'>
+        <div className="settings-section">
           <h2>LastFM</h2>
-          <h3 className='last-fm-user'>{lastFMSession?.name ?? 'No logged-in user.'}</h3>
-          <button className='last-fm-button' onClick={authorizeUser}>LastFM Login</button>
+          <h3 className="last-fm-user">
+            {lastFMSession?.name ?? "No logged-in user."}
+          </h3>
+          <button className="last-fm-button" onClick={authorizeUser}>
+            LastFM Login
+          </button>
         </div>
-        <div className='settings-section'>
-          <h2>Beta: Mini Player Theme</h2>
+        <div className="settings-section">
+          <h2>Mini Player Theme (Beta)</h2>
           <PopupThemeEditor />
         </div>
-        <div className='settings-section'>
-          <h2>Beta: YouTube Music Theme</h2>
+        <div className="settings-section">
+          <h2>YouTube Music Theme (Beta)</h2>
           <YTMThemeEditor showPopupButton />
         </div>
       </div>
     </OptionsStyled>
-  )
+  );
 }
 
 const OptionsStyled = styled.div`
@@ -142,8 +158,9 @@ const OptionsStyled = styled.div`
     font-size: 13px;
   }
 
-  .last-fm-button:hover, .save-button:hover {
+  .last-fm-button:hover,
+  .save-button:hover {
     background-color: white;
     color: #da0000;
   }
-`
+`;

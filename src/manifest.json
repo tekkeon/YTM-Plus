@@ -10,9 +10,10 @@
   "permissions": [
       "storage",
       "https://music.youtube.com/*",
+      "https://*.spotify.com/*",
       "notifications"
   ],
-  "content_security_policy": "script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'self'",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "icons": {
       "16": "assets/16-icon.png",
       "48": "assets/48-icon.png",
@@ -25,6 +26,15 @@
           ],
           "js": [
               "content.bundle.js"
+          ],
+          "run_at": "document_end"
+      },
+      {
+          "matches": [
+              "*://*.spotify.com/*"
+          ],
+          "js": [
+              "spotify.bundle.js"
           ],
           "run_at": "document_end"
       }
