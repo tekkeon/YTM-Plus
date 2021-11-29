@@ -34,3 +34,6 @@ YTM+ will display push notifications when the next track plays, allowing the use
 
 ## Contributing
 If you find a bug or have a new feature you'd like to add, please open a GitHub issue and feel free to submit a PR!
+
+## License
+[MIT](https://github.com/mkossoris/YTM-Plus/blob/master/LICENSE.md)
