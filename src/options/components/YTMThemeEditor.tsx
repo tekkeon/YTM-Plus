@@ -5,14 +5,13 @@ import { YTMTheme, Options } from "../../types";
 import ColorSelector from "./ColorSelector";
 import { DefaultYTMTheme, MessageType } from "../../constants";
 import { messaging } from "../../util/chrome";
+import YTMThemePreview from "./YTMThemePreview";
 
 interface YTMThemeEditorProps {
-  showPopupButton?: boolean;
+  popup?: boolean;
 }
 
-export default function YTMThemeEditor({
-  showPopupButton,
-}: YTMThemeEditorProps) {
+export default function YTMThemeEditor({ popup }: YTMThemeEditorProps) {
   const { result: options, set } = useStorage<Options>("options");
 
   const handleChange = (id: keyof YTMTheme, newValue: string | boolean) => {
@@ -40,7 +39,7 @@ export default function YTMThemeEditor({
   };
 
   const handleReset = () => {
-    set({ ...options, ytmTheme: null });
+    set({ ...options, ytmTheme: DefaultYTMTheme });
     messaging.sendToYTMTab({
       type: MessageType.YTM_THEME_UPDATED,
     });
@@ -75,13 +74,9 @@ export default function YTMThemeEditor({
 
   return (
     <Container>
+      {!popup && <YTMThemePreview ytmTheme={ytmTheme || DefaultYTMTheme} />}
+      <br />
       <ThemeOptions>
-        {showPopupButton && (
-          <DefaultButton onClick={handleYTMEditorPopout}>
-            Popout Editor
-          </DefaultButton>
-        )}
-        <DefaultButton onClick={handleReset}>Default</DefaultButton>
         <Sections>
           <div>
             <h2>Header/Footer</h2>
@@ -124,7 +119,7 @@ export default function YTMThemeEditor({
               id="logoColor"
             />
             <ColorSelector
-              label="logoText"
+              label="Logo Text"
               color={ytmTheme?.logoText ?? "white"}
               onChange={(newColor) => handleChange("logoText", newColor)}
               id="logoText"
@@ -185,6 +180,14 @@ export default function YTMThemeEditor({
             />
           </div>
         </Sections>
+        <br />
+        <br />
+        {!popup && (
+          <DefaultButton onClick={handleYTMEditorPopout}>
+            Popout Editor
+          </DefaultButton>
+        )}
+        <DefaultButton onClick={handleReset}>Default</DefaultButton>
       </ThemeOptions>
     </Container>
   );

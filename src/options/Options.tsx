@@ -75,6 +75,15 @@ export default function Options() {
           />
         </div>
         <div className="settings-section">
+          <h2>Spotify</h2>
+          <Option
+            title="Enable Spotify Redirect Dialogue"
+            description="Shows a popup on Spotify track links asking to listen on YouTube Music"
+            checked={options?.spotifyToYTM}
+            onClick={() => handleCheckboxClick("spotifyToYTM")}
+          />
+        </div>
+        <div className="settings-section">
           <h2>LastFM</h2>
           <h3 className="last-fm-user">
             {lastFMSession?.name ?? "No logged-in user."}
@@ -89,7 +98,7 @@ export default function Options() {
         </div>
         <div className="settings-section">
           <h2>YouTube Music Theme (Beta)</h2>
-          <YTMThemeEditor showPopupButton />
+          <YTMThemeEditor />
         </div>
       </div>
     </OptionsStyled>
@@ -123,8 +132,8 @@ const OptionsStyled = styled.div`
 
     & > h2 {
       font-size: 28px;
-      font-weight: 400;
-      color: #da0000;
+      font-weight: 600;
+      color: rgb(251 12 12);
       margin-bottom: 15px;
       margin-top: 0;
     }

@@ -11,26 +11,32 @@ import {
 } from "./handlers";
 
 chrome.runtime.onInstalled.addListener(function (details) {
-  if (details.reason == "install") {
-    storage
-      .set({
-        options: DefaultOptions,
-      })
-      .then(() => {
-        chrome.tabs.create({ url: "html/options.html" });
-      });
+  switch (details.reason) {
+    case "install":
+      storage
+        .set({
+          options: DefaultOptions,
+        })
+        .then(() => {
+          chrome.tabs.create({ url: "html/options.html" });
+        });
+
+    case "update":
+      // Add any new default options fields on update
+      storage
+        .get("options")
+        .then((options) =>
+          storage.set({
+            options: {
+              ...DefaultOptions,
+              ...options,
+            },
+          })
+        )
+        .then(() => {
+          chrome.tabs.create({ url: "html/options.html" });
+        });
   }
-});
-
-chrome.tabs.onUpdated.addListener(() => {
-  storage.get("options").then((options: Options) => {
-    const newOptions = {
-      ...DefaultOptions,
-      ...options,
-    };
-
-    storage.set({ options: newOptions });
-  });
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

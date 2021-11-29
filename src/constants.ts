@@ -1,6 +1,6 @@
-import { MiniTheme, Options, YTMTheme } from './types'
+import { MiniTheme, Options, YTMTheme } from "./types";
 
-export const MAIN_URL = 'https://music.youtube.com/*'
+export const MAIN_URL = "https://music.youtube.com/*";
 
 export const enum MessageType {
   DISLIKE_TRACK,
@@ -26,49 +26,52 @@ export const enum MessageType {
 }
 
 export const DefaultMiniDarkTheme: MiniTheme = {
-  primaryText: '#ffffff',
-  secondaryText: '#b1b1b1',
-  backgroundColor: '#1d1d1d',
-  footerBackgroundColor: '#282828',
-  primaryButton: '#dddddd',
-  secondaryButton: '#909090',
-  progressColor: '#ff0000',
-  queueBackground: '#474747'
-}
+  primaryText: "#ffffff",
+  secondaryText: "#b1b1b1",
+  backgroundColor: "#1d1d1d",
+  footerBackgroundColor: "#282828",
+  primaryButton: "#dddddd",
+  secondaryButton: "#909090",
+  progressColor: "#ff0000",
+  queueBackground: "#474747",
+};
 
 export const DefaultMiniLightTheme: MiniTheme = {
-  primaryText: '#1b1b1b',
-  secondaryText: '#8a8a8a',
-  backgroundColor: '#ffffff',
-  footerBackgroundColor: '#e2e2e2',
-  primaryButton: '#000000',
-  secondaryButton: '#909090',
-  progressColor: '#ff0000',
-  queueBackground: '#ffffff'
-}
+  primaryText: "#1b1b1b",
+  secondaryText: "#8a8a8a",
+  backgroundColor: "#ffffff",
+  footerBackgroundColor: "#e2e2e2",
+  primaryButton: "#000000",
+  secondaryButton: "#909090",
+  progressColor: "#ff0000",
+  queueBackground: "#ffffff",
+};
 
 export const DefaultYTMTheme: YTMTheme = {
-  headerFooterBackground: '#000000',
-  headerFooterPrimaryText: '#FFFFFF',
-  headerFooterSecondaryText: '#CCCCCC',
-  headerFooterButtons: '#CCCCCC',
-  mainBackground: '#000000',
-  mainHeading: '#FFFFFF',
-  mainPrimary: '#FFFFFF',
-  mainSecondary: '#CCCCCC',
-  queueBackground: '#000000',
-  queueHeading: '#FFFFFF',
-  queuePrimary: '#FFFFFF',
-  queueSecondary: '#CCCCCC'
-}
+  headerFooterBackground: "#000000",
+  headerFooterPrimaryText: "#FFFFFF",
+  headerFooterSecondaryText: "#CCCCCC",
+  headerFooterButtons: "#CCCCCC",
+  mainBackground: "#000000",
+  mainHeading: "#FFFFFF",
+  mainPrimary: "#FFFFFF",
+  mainSecondary: "#CCCCCC",
+  queueBackground: "#000000",
+  queueHeading: "#FFFFFF",
+  queuePrimary: "#FFFFFF",
+  queueSecondary: "#CCCCCC",
+  logo: "#FF0000",
+  logoText: "#FFFFFF",
+};
 
 export const DefaultOptions: Options = {
-  miniKeyControl: true,
-  notifications: true,
-  ytmKeyControl: true,
   lyrics: true,
   mediaKeyControl: true,
-  popoutWindow: false,
+  miniKeyControl: true,
   miniTheme: DefaultMiniDarkTheme,
-  ytmTheme: DefaultYTMTheme
-}
+  notifications: true,
+  popoutWindow: false,
+  spotifyToYTM: true,
+  ytmKeyControl: true,
+  ytmTheme: DefaultYTMTheme,
+};

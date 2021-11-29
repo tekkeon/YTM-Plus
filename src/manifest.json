@@ -1,56 +1,46 @@
 {
   "manifest_version": 2,
   "name": "YTM+ for YouTube™ Music",
-  "description": "Control your YouTube Music anywhere in Chrome with a mini player, lyrics, LastFM, and more!",
-  "version": "3.0.0",
+  "description": "Upgrade your YouTube Music experience with a mini player, lyrics, themes, and integrations!",
+  "version": "3.1.0",
   "browser_action": {
-   "default_icon": "assets/128-icon.png",
-   "default_popup": "html/popup.html"
+    "default_icon": "assets/128-icon.png",
+    "default_popup": "html/popup.html"
   },
   "permissions": [
-      "storage",
-      "https://music.youtube.com/*",
-      "https://*.spotify.com/*",
-      "notifications"
+    "storage",
+    "https://music.youtube.com/*",
+    "https://*.spotify.com/*",
+    "notifications"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "icons": {
-      "16": "assets/16-icon.png",
-      "48": "assets/48-icon.png",
-     "128": "assets/128-icon.png"
+    "16": "assets/16-icon.png",
+    "48": "assets/48-icon.png",
+    "128": "assets/128-icon.png"
   },
   "content_scripts": [
-      {
-          "matches": [
-              "*://music.youtube.com/*"
-          ],
-          "js": [
-              "content.bundle.js"
-          ],
-          "run_at": "document_end"
-      },
-      {
-          "matches": [
-              "*://*.spotify.com/*"
-          ],
-          "js": [
-              "spotify.bundle.js"
-          ],
-          "run_at": "document_end"
-      }
+    {
+      "matches": ["*://music.youtube.com/*"],
+      "js": ["content.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.spotify.com/*"],
+      "js": ["spotify.bundle.js"],
+      "run_at": "document_end"
+    }
   ],
   "options_page": "html/options.html",
   "web_accessible_resources": [
-      "src/options/options.html",
-      "css/youtube_music_light.css",
-      "css/popup.css",
-      "assets/*",
-      "utils/*"
+    "src/options/options.html",
+    "css/youtube_music_light.css",
+    "css/popup.css",
+    "assets/*",
+    "utils/*"
   ],
   "background": {
-      "persistent": false,
-      "scripts": [
-          "background.bundle.js"
-      ]
+    "persistent": false,
+    "scripts": ["background.bundle.js"]
   }
 }

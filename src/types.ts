@@ -1,4 +1,4 @@
-import { MessageType } from './constants';
+import { MessageType } from "./constants";
 
 export interface LastFMSession {
   key: string;
@@ -53,13 +53,14 @@ export interface NetworkState {
 }
 
 export interface Options {
-  miniKeyControl: boolean;
-  notifications: boolean;
-  ytmKeyControl: boolean;
   lyrics: boolean;
   mediaKeyControl: boolean;
-  popoutWindow: boolean;
+  miniKeyControl: boolean;
   miniTheme: MiniTheme;
+  notifications: boolean;
+  popoutWindow: boolean;
+  spotifyToYTM: boolean;
+  ytmKeyControl: boolean;
   ytmTheme: YTMTheme | null;
 }
 
@@ -72,7 +73,7 @@ export interface QueueItem {
 
 export interface Session {
   id: string;
-  playerState?: PlayerState
+  playerState?: PlayerState;
   url?: string;
   songInfo?: Partial<SongInfo>;
   listeners?: any;
@@ -105,4 +106,8 @@ export interface YTMTheme {
   queueSecondary: string;
 }
 
-export type MessageHandler = (payload?: any, sender?: any, sendResponse?: (input: any) => void) => void;
+export type MessageHandler = (
+  payload?: any,
+  sender?: any,
+  sendResponse?: (input: any) => void
+) => void;

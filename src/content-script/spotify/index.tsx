@@ -1,8 +1,9 @@
 import { MessageType } from "../../constants";
-import { messaging } from "../../util/chrome";
+import { messaging, storage } from "../../util/chrome";
 import React from "react";
 import ReactDOM from "react-dom";
 import RedirectOption from "./RedirectOption";
+import { Options } from "../../types";
 
 var oldHref = document.location.href;
 
@@ -17,7 +18,12 @@ function docReady(fn: any) {
   }
 }
 
-docReady(() => {
+docReady(async () => {
+  const options = (await storage.get("options")) as Options;
+  if (!options.spotifyToYTM) {
+    return;
+  }
+
   tryYTMRedirect();
 
   const observer = new MutationObserver((mutations) => {

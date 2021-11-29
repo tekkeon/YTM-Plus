@@ -1,8 +1,8 @@
-import { YTMTheme } from '../types';
-import { DefaultYTMTheme, MAIN_URL } from '../constants';
+import { YTMTheme } from "../types";
+import { DefaultYTMTheme, MAIN_URL } from "../constants";
 
 export const openTab = () => {
-  chrome.tabs.query({ url: MAIN_URL }, tabs => {
+  chrome.tabs.query({ url: MAIN_URL }, (tabs) => {
     if (tabs && tabs[0]) {
       chrome.tabs.update(tabs[0].id as number, { highlighted: true });
     } else {
@@ -13,10 +13,10 @@ export const openTab = () => {
 
 export const createThemeCSS = (theme?: YTMTheme | null) => {
   if (!theme) {
-    return '';
+    return "";
   }
 
-  return (`
+  return `
     /* Nav Bar */
     .center-content.ytmusic-nav-bar {
       background-color: ${theme.headerFooterBackground};
@@ -236,8 +236,8 @@ export const createThemeCSS = (theme?: YTMTheme | null) => {
       color: ${theme.headerFooterSecondaryText} !important;
     }
 
-    ytmusic-player-bar iron-icon {
-      fill: ${theme.headerFooterButtons} !important;
+    ytmusic-player-bar tp-yt-iron-icon {
+      --iron-icon-fill-color: ${theme.headerFooterButtons} !important;
     }
 
     .ytmusic-nav-bar .ytmusic-pivot-bar-renderer,
@@ -323,5 +323,5 @@ export const createThemeCSS = (theme?: YTMTheme | null) => {
     #browse-page .ytmusic-responsive-list-item-renderer.secondary-flex-columns * {
       color: ${theme.mainSecondary} !important;
     }
-  `);
-}
+  `;
+};
