@@ -2,6 +2,8 @@
 
 YTM+ for YouTube Music is a Chrome extension designed to make YouTube Music a more enjoyable experience. The extension was originally built as just a mini player in the browser, but has grown to include features like lyrics, themes, notification, and other integrations with LastFM and Spotify.
 
+Link to the extension on Chrome's Web Store: https://chrome.google.com/webstore/detail/ytm%2B-for-youtube-music/jcdmcpefbebkldopabclefjaggejocff
+
 ## Features
 ### Mini Player
 The mini player allows you to control YTM from anywhere in the browser. This includes playback and audio controls, as well as being able to see and select from your queue.
@@ -29,3 +31,6 @@ It's annoying when your friends who use Spotify send you Spotify tracks to liste
 YTM+ will display push notifications when the next track plays, allowing the user to quickly see what is now playing. Additionally, users can optionally connect their LastFM accounts and YTM+ will scrobble their tracks automatically. And finally, YTM+ adds some basic controls to the YTM webpage that allows for controlling playback with the keyboard.
 
 ![Other Features](https://github.com/mkossoris/YTM-Plus/blob/master/screenshots/Notifs%20and%20Scrobbling.png)
+
+## Contributing
+If you find a bug or have a new feature you'd like to add, please open a GitHub issue and feel free to submit a PR!
