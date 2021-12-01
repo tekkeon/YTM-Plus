@@ -39,7 +39,7 @@ export default function YTMThemeEditor({ popup }: YTMThemeEditorProps) {
   };
 
   const handleReset = () => {
-    set({ ...options, ytmTheme: DefaultYTMTheme });
+    set({ ...options, ytmTheme: null });
     messaging.sendToYTMTab({
       type: MessageType.YTM_THEME_UPDATED,
     });

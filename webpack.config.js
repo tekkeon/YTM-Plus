@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+var ZipPlugin = require("zip-webpack-plugin");
+const manifest = require("./src/manifest.json");
 
 module.exports = {
   devServer: {
@@ -96,6 +98,10 @@ module.exports = {
       ],
     }),
     new CleanWebpackPlugin(),
+    new ZipPlugin({
+      path: `..`,
+      filename: `YTM+-${manifest.version}.zip`,
+    }),
   ],
   optimization: {
     minimize: false,

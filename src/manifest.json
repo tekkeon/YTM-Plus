@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "YTM+ for YouTube™ Music",
   "description": "Upgrade your YouTube Music experience with a mini player, lyrics, themes, and integrations!",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "browser_action": {
     "default_icon": "assets/128-icon.png",
     "default_popup": "html/popup.html"
