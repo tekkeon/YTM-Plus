@@ -23,7 +23,7 @@ YTM+ allows you to build themes for both the mini player and the YouTube Music i
 ![Theme Builder](https://github.com/mkossoris/YTM-Plus/blob/master/screenshots/Theme%20Preview.png)
 
 ### Spotify to YTM
-It's annoying when your friends who use Spotify send you Spotify tracks to listen to as a user of YTM. This feature displays a popup on Spotify track pages, and with a click of a button, you will be redirected to the YTM track. (Note: YTM does not have a public API, so this feature has some limitations and does not work perfectly)
+As a user of YTM, it can be a bit of a nuisance when you receive a link to a song on Spotify. This feature displays a popup on Spotify track pages, and with a click of a button, you will be redirected to the YTM track. (Note: YTM does not have a public API, so this feature has some limitations and does not work perfectly)
 
 ![Spotify to YTM](https://github.com/mkossoris/YTM-Plus/blob/master/screenshots/Redirect%20from%20Spotify.png)
 
