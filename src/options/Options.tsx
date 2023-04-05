@@ -19,10 +19,13 @@ export default function Options() {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
 
-    console.log(token);
-
     if (token) {
-      finishAuth(token).then(setLastFMSession).catch(console.log);
+      finishAuth(token)
+        .then((res) => {
+          setLastFMSession(res);
+          window.history.replaceState({}, document.title, "/options.html");
+        })
+        .catch(console.log);
     }
   }, []);
 

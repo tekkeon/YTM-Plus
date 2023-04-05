@@ -2,16 +2,18 @@
   "manifest_version": 2,
   "name": "YTM+ for YouTube™ Music",
   "description": "Upgrade your YouTube Music experience with a mini player, lyrics, themes, and integrations!",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "browser_action": {
     "default_icon": "assets/128-icon.png",
     "default_popup": "html/popup.html"
   },
   "permissions": [
     "storage",
-    "https://music.youtube.com/*",
-    "https://*.spotify.com/*",
-    "notifications"
+    "*://music.youtube.com/*",
+    "*://*.spotify.com/*",
+    "*://*.ytmplus.app/*",
+    "notifications",
+    "tabs"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "icons": {
@@ -28,6 +30,11 @@
     {
       "matches": ["*://*.spotify.com/*"],
       "js": ["spotify.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.ytmplus.app/lastfm*"],
+      "js": ["lastfm.bundle.js"],
       "run_at": "document_end"
     }
   ],

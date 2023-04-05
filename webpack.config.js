@@ -20,6 +20,7 @@ module.exports = {
     sync: path.resolve(__dirname, "./src/sync/index.tsx"),
     themePopup: path.resolve(__dirname, "./src/options/themePopup/index.tsx"),
     spotify: path.resolve(__dirname, "./src/content-script/spotify/index.tsx"),
+    lastfm: path.resolve(__dirname, "./src/content-script/lastfm/index.ts"),
   },
   output: {
     filename: "[name].bundle.js",

@@ -23,6 +23,7 @@ export const enum MessageType {
   SONG_UPDATED,
   SPOTIFY_TO_YTM,
   YTM_THEME_UPDATED,
+  REDIRECT_TO_OPTIONS,
 }
 
 export const DefaultMiniDarkTheme: MiniTheme = {

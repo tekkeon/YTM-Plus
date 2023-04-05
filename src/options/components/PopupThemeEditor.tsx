@@ -1,87 +1,103 @@
-import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import Popup from '../../popup/Popup';
-import useStorage from '../../hooks/useStorage';
-import { MiniTheme, Options } from '../../types';
-import ColorSelector from './ColorSelector';
-import { DefaultMiniDarkTheme, DefaultMiniLightTheme } from '../../constants';
+import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+import Popup from "../../popup/Popup";
+import useStorage from "../../hooks/useStorage";
+import { MiniTheme, Options } from "../../types";
+import ColorSelector from "./ColorSelector";
+import { DefaultMiniDarkTheme, DefaultMiniLightTheme } from "../../constants";
+import { PlayerStateProvider } from "../../contexts/PlayerStateContext";
+import { SongInfoProvider } from "../../contexts/SongInfoContext";
 
 export default function PopupThemeEditor() {
-  const { result: options, set } = useStorage<Options>('options');
+  const { result: options, set } = useStorage<Options>("options");
 
   const handleChange = (id: keyof MiniTheme, newValue: string) => {
     set({
       ...options,
       miniTheme: {
         ...options.miniTheme,
-        [id]: newValue
-      }
-    })
-  }
+        [id]: newValue,
+      },
+    });
+  };
 
-  const miniTheme = options?.miniTheme
+  const miniTheme = options?.miniTheme;
 
   return (
     <Container>
       <ThemeOptions>
-        <DefaultButton onClick={() => set({ ...options, miniTheme: DefaultMiniDarkTheme })}>Default Dark</DefaultButton>
-        <DefaultButton onClick={() => set({ ...options, miniTheme: DefaultMiniLightTheme })}>Default Light</DefaultButton>
+        <DefaultButton
+          onClick={() => set({ ...options, miniTheme: DefaultMiniDarkTheme })}
+        >
+          Default Dark
+        </DefaultButton>
+        <DefaultButton
+          onClick={() => set({ ...options, miniTheme: DefaultMiniLightTheme })}
+        >
+          Default Light
+        </DefaultButton>
         <ColorSelector
           label="Primary Text"
           color={miniTheme?.primaryText}
-          onChange={newColor => handleChange('primaryText', newColor)}
+          onChange={(newColor) => handleChange("primaryText", newColor)}
           id="primary-text"
         />
         <ColorSelector
           label="Secondary Text/Accent"
           color={miniTheme?.secondaryText}
-          onChange={newColor => handleChange('secondaryText', newColor)}
+          onChange={(newColor) => handleChange("secondaryText", newColor)}
           id="secondary-text"
         />
         <ColorSelector
           label="Primary Button"
           color={miniTheme?.primaryButton}
-          onChange={newColor => handleChange('primaryButton', newColor)}
+          onChange={(newColor) => handleChange("primaryButton", newColor)}
           id="primary-button"
         />
         <ColorSelector
           label="Secondary Button"
           color={miniTheme?.secondaryButton}
-          onChange={newColor => handleChange('secondaryButton', newColor)}
+          onChange={(newColor) => handleChange("secondaryButton", newColor)}
           id="secondary-button"
         />
         <ColorSelector
           label="Main Background"
           color={miniTheme?.backgroundColor}
-          onChange={newColor => handleChange('backgroundColor', newColor)}
+          onChange={(newColor) => handleChange("backgroundColor", newColor)}
           id="background"
         />
         <ColorSelector
           label="Footer Background"
           color={miniTheme?.footerBackgroundColor}
-          onChange={newColor => handleChange('footerBackgroundColor', newColor)}
+          onChange={(newColor) =>
+            handleChange("footerBackgroundColor", newColor)
+          }
           id="footer-background"
         />
         <ColorSelector
           label="Queue Background Color"
           color={miniTheme?.queueBackground}
-          onChange={newColor => handleChange('queueBackground', newColor)}
+          onChange={(newColor) => handleChange("queueBackground", newColor)}
           id="queue-background"
         />
         <ColorSelector
           label="Progress Color"
           color={miniTheme?.progressColor}
-          onChange={newColor => handleChange('progressColor', newColor)}
+          onChange={(newColor) => handleChange("progressColor", newColor)}
           id="progress"
         />
       </ThemeOptions>
       <div className="popup-container">
         <ThemeProvider theme={miniTheme ?? DefaultMiniDarkTheme}>
-          <Popup />
+          <PlayerStateProvider>
+            <SongInfoProvider>
+              <Popup />
+            </SongInfoProvider>
+          </PlayerStateProvider>
         </ThemeProvider>
       </div>
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -95,14 +111,14 @@ const Container = styled.div`
     overflow: hidden;
     box-shadow: 0 0 10px 5px #0000001f;
   }
-`
+`;
 
 const ThemeOptions = styled.div`
   label {
     color: #c7c7c7;
     font-size: 16px;
   }
-`
+`;
 
 const DefaultButton = styled.button`
   background: none;
@@ -115,4 +131,4 @@ const DefaultButton = styled.button`
   margin-top: 10px;
   outline: none;
   padding: 8px 16px;
-`
+`;

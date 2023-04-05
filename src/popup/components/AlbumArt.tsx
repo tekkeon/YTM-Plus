@@ -1,39 +1,53 @@
-import React from 'react';
-import styled from 'styled-components';
-import thumbUpOutline from '../../assets/thumbupoutline.png';
-import thumbDownOutline from '../../assets/thumbdownoutline.png';
-import thumbUpFilled from '../../assets/thumbupfilled.png';
-import thumbDownFilled from '../../assets/thumbdownfilled.png';
+import React from "react";
+import styled from "styled-components";
+import thumbUpOutline from "../../assets/thumbupoutline.png";
+import thumbDownOutline from "../../assets/thumbdownoutline.png";
+import thumbUpFilled from "../../assets/thumbupfilled.png";
+import thumbDownFilled from "../../assets/thumbdownfilled.png";
 
-import { useSongInfo } from '../../contexts/SongInfoContext';
-import { usePlayerState } from '../../contexts/PlayerStateContext';
-import { messaging } from '../../util/chrome';
-import { MessageType } from '../../constants';
+import { useSongInfo } from "../../contexts/SongInfoContext";
+import { usePlayerState } from "../../contexts/PlayerStateContext";
+import { messaging } from "../../util/chrome";
+import { MessageType } from "../../constants";
 
 export default function AlbumArt() {
-  const songInfo = useSongInfo();
+  const { songInfo } = useSongInfo();
   const playerState = usePlayerState();
 
   const onThumbUpClick = () => {
-    messaging.sendToYTMTab({type: MessageType.LIKE_TRACK, payload: !playerState?.thumbUp });
-  }
+    messaging.sendToYTMTab({
+      type: MessageType.LIKE_TRACK,
+      payload: !playerState?.thumbUp,
+    });
+  };
 
   const onThumbDownClick = () => {
-    messaging.sendToYTMTab({type: MessageType.DISLIKE_TRACK, payload: !playerState?.thumbDown });
-  }
+    messaging.sendToYTMTab({
+      type: MessageType.DISLIKE_TRACK,
+      payload: !playerState?.thumbDown,
+    });
+  };
 
   return (
-    <AlbumArtStyled url={songInfo?.albumArtUrl ?? ''}>
+    <AlbumArtStyled url={songInfo?.albumArtUrl ?? ""}>
       <div className="album-image"></div>
       <div className="album-overlay">
         <div className="thumbs">
-          <img className="thumb-up" src={playerState?.thumbUp ? thumbUpFilled : thumbUpOutline} onClick={onThumbUpClick} />
-          <img className="thumb-down" src={playerState?.thumbDown ? thumbDownFilled : thumbDownOutline} onClick={onThumbDownClick} />
+          <img
+            className="thumb-up"
+            src={playerState?.thumbUp ? thumbUpFilled : thumbUpOutline}
+            onClick={onThumbUpClick}
+          />
+          <img
+            className="thumb-down"
+            src={playerState?.thumbDown ? thumbDownFilled : thumbDownOutline}
+            onClick={onThumbDownClick}
+          />
         </div>
-        <p className="times">{playerState?.trackTime || '0:00 / 0:00'}</p>
+        <p className="times">{playerState?.trackTime || "0:00 / 0:00"}</p>
       </div>
     </AlbumArtStyled>
-  )
+  );
 }
 
 interface AlbumArtStyledProps {
@@ -41,16 +55,15 @@ interface AlbumArtStyledProps {
 }
 
 const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
-  border: 1px solid ${props => props.theme.secondaryText};
+  border: 1px solid ${(props) => props.theme.secondaryText};
   height: 180px;
   width: 180px;
   margin: 15px auto 15px auto;
   position: relative;
 
   & > .album-image {
-    background: ${props => props.url ?
-      `url(${props.url})` :
-      'linear-gradient(#424242, #333333)'};
+    background: ${(props) =>
+      props.url ? `url(${props.url})` : "linear-gradient(#424242, #333333)"};
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain !important;
@@ -83,7 +96,7 @@ const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
       width: 100px;
       text-align: center;
     }
-    
+
     & > .thumbs img {
       height: 35px;
       width: 35px;
@@ -100,4 +113,4 @@ const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
       margin: auto;
     }
   }
-`
+`;
