@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&subset=latin,cyrillic");
+body {
+  padding: 50px 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background: #1d1d1d;
+}
+
+h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+
+p {
+  color: #bebebe;
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.action-button {
+  background-color: rgb(232 72 68);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 16px auto 0px;
+  display: block;
+  text-decoration: none;
+}
+
+.outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.loader {
+  border: 5px solid #5a5a5a;
+  border-radius: 50%;
+  border-top: 5px solid #8e8e8e;
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 30px auto;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+
+.connecting-images-container {
+  display: flex;
+  width: 350px;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.connecting-image {
+  width: 100px;
+  height: 100px;
+}
+
+.connecting-arrow {
+  line-height: 100px;
+  color: white;
+  font-size: 50px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
