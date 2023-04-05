@@ -12,8 +12,7 @@
     "*://music.youtube.com/*",
     "*://*.spotify.com/*",
     "*://*.ytmplus.app/*",
-    "notifications",
-    "tabs"
+    "notifications"
   ],
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "icons": {

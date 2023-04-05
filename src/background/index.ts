@@ -39,6 +39,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         .then(() => {
           chrome.tabs.create({ url: "html/options.html" });
         });
+      break;
 
     case "update":
       // Add any new default options fields on update
@@ -55,6 +56,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
         .then(() => {
           chrome.tabs.create({ url: "html/options.html" });
         });
+      break;
   }
 });
 

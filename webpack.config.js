@@ -99,10 +99,6 @@ module.exports = {
       ],
     }),
     new CleanWebpackPlugin(),
-    new ZipPlugin({
-      path: `..`,
-      filename: `YTM+-${manifest.version}.zip`,
-    }),
   ],
   optimization: {
     minimize: false,
