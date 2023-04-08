@@ -21,6 +21,7 @@ module.exports = {
     themePopup: path.resolve(__dirname, "./src/options/themePopup/index.tsx"),
     spotify: path.resolve(__dirname, "./src/content-script/spotify/index.tsx"),
     lastfm: path.resolve(__dirname, "./src/content-script/lastfm/index.ts"),
+    sync2: path.resolve(__dirname, "./src/sync2/index.tsx"),
   },
   output: {
     filename: "[name].bundle.js",
@@ -91,6 +92,11 @@ module.exports = {
       filename: "html/themePopup.html",
       template: "src/options/themePopup/index.html",
       chunks: ["themePopup"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "html/sync2.html",
+      template: "src/sync2/index.html",
+      chunks: ["sync2"],
     }),
     new CopyWebpackPlugin({
       patterns: [
