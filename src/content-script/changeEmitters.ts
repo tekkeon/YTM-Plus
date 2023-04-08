@@ -10,9 +10,10 @@ const initializeChangeEmitters = () => {
   // Update song info on title change
   const songInfoObserver = new MutationObserver(() => {
     updateSongInfo();
+    updateTabTitle();
   });
 
-  const titleElement = document.querySelector('.title.ytmusic-player-bar');
+  const titleElement = document.querySelector<HTMLElement>('.title.ytmusic-player-bar');
   titleElement && songInfoObserver.observe(titleElement, { attributeFilter: ['title'] });
 
   // Update player state on play/pause, track progress, like/dislike, and volume
@@ -22,6 +23,17 @@ const initializeChangeEmitters = () => {
 
   const playPauseElement = document.querySelector('.play-pause-button');
   playPauseElement && playerStateObserver.observe(playPauseElement, { attributeFilter: ['title'] });
+
+  // Update tab title with song name. Needs to watch <title> because YT stupidly changes the title whenever you pause
+  const baseTitle = "YouTube Music";
+  const updateTabTitle = () => {
+    if (titleElement?.innerText && tabTitleElement?.innerText === baseTitle)
+      tabTitleElement.innerText = titleElement.innerText + " - " + baseTitle;
+  }
+  const tabTitleObserver = new MutationObserver(updateTabTitle);
+  
+  const tabTitleElement = document.querySelector('title');
+  tabTitleElement && tabTitleObserver.observe(tabTitleElement, { subtree: true, characterData: true, childList: true });
 
   const progressBarKnobElement = document.querySelector('#progress-bar #sliderKnob .slider-knob-inner');
   progressBarKnobElement && playerStateObserver.observe(progressBarKnobElement, { attributeFilter: ['value'] });
