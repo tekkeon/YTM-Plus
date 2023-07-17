@@ -1,11 +1,11 @@
-import { MessageType } from "../constants";
-import { storage } from "../util/chrome";
-import { DefaultOptions } from "../constants";
+import { MessageType } from '../constants';
+import { storage } from '../util/chrome';
+import { DefaultOptions } from '../constants';
 import {
   handleSongUpdated,
   handleScrobble,
   handleSpotifyToYTM,
-} from "./handlers";
+} from './handlers';
 
 const injectContentScriptOnInstall = () => {
   const contentScripts = chrome.runtime.getManifest().content_scripts;
@@ -30,20 +30,20 @@ chrome.runtime.onInstalled.addListener(function (details) {
   injectContentScriptOnInstall();
 
   switch (details.reason) {
-    case "install":
+    case 'install':
       storage
         .set({
           options: DefaultOptions,
         })
         .then(() => {
-          chrome.tabs.create({ url: "html/options.html" });
+          chrome.tabs.create({ url: 'html/options.html' });
         });
       break;
 
-    case "update":
+    case 'update':
       // Add any new default options fields on update
       storage
-        .get("options")
+        .get('options')
         .then((options) =>
           storage.set({
             options: {
@@ -53,7 +53,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
           })
         )
         .then(() => {
-          chrome.tabs.create({ url: "html/options.html" });
+          chrome.tabs.create({ url: 'html/options.html' });
         });
       break;
   }
@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     case MessageType.REDIRECT_TO_OPTIONS:
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.update(tabs[0].id!, {
-          url: `html/options.html${message.payload.query ?? ""}`,
+          url: `html/options.html${message.payload.query ?? ''}`,
         });
       });
       break;
