@@ -18,7 +18,6 @@ module.exports = {
     content: path.resolve(__dirname, "./src/content-script/index.ts"),
     background: path.resolve(__dirname, "./src/background/index.ts"),
     sync: path.resolve(__dirname, "./src/sync/index.tsx"),
-    themePopup: path.resolve(__dirname, "./src/options/themePopup/index.tsx"),
     spotify: path.resolve(__dirname, "./src/content-script/spotify/index.tsx"),
     lastfm: path.resolve(__dirname, "./src/content-script/lastfm/index.ts"),
   },
@@ -86,11 +85,6 @@ module.exports = {
       filename: "html/sync.html",
       template: "src/sync/index.html",
       chunks: ["sync"],
-    }),
-    new HtmlWebpackPlugin({
-      filename: "html/themePopup.html",
-      template: "src/options/themePopup/index.html",
-      chunks: ["themePopup"],
     }),
     new CopyWebpackPlugin({
       patterns: [

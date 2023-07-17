@@ -8,7 +8,6 @@ import Option from "./components/Option";
 import PopupThemeEditor from "./components/PopupThemeEditor";
 import { LastFMSession, Options } from "../types";
 import useStorage from "../hooks/useStorage";
-import YTMThemeEditor from "./components/YTMThemeEditor";
 
 export default function Options() {
   const { result: options, set: setOptions } = useStorage<Options>("options");
@@ -42,7 +41,7 @@ export default function Options() {
     <OptionsStyled>
       <h1 className="settings-page-title">
         <FontAwesomeIcon icon={faCogs} />
-        &nbsp;&nbsp;YT Music Mini Settings
+        &nbsp;&nbsp;YTM+ Settings
       </h1>
       <div className="settings-page-container">
         <div className="settings-section">
@@ -98,10 +97,6 @@ export default function Options() {
         <div className="settings-section">
           <h2>Mini Player Theme (Beta)</h2>
           <PopupThemeEditor />
-        </div>
-        <div className="settings-section">
-          <h2>YouTube Music Theme (Beta)</h2>
-          <YTMThemeEditor />
         </div>
       </div>
     </OptionsStyled>

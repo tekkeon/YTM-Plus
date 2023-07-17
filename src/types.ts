@@ -61,7 +61,6 @@ export interface Options {
   popoutWindow: boolean;
   spotifyToYTM: boolean;
   ytmKeyControl: boolean;
-  ytmTheme: YTMTheme | null;
 }
 
 export interface QueueItem {
@@ -87,23 +86,6 @@ export interface SongInfo {
   title: string;
   id: string;
   year: string;
-}
-
-export interface YTMTheme {
-  headerFooterBackground: string;
-  headerFooterPrimaryText: string;
-  headerFooterSecondaryText: string;
-  headerFooterButtons: string;
-  logo?: string;
-  logoText?: string;
-  mainBackground: string;
-  mainHeading: string;
-  mainPrimary: string;
-  mainSecondary: string;
-  queueHeading: string;
-  queueBackground: string;
-  queuePrimary: string;
-  queueSecondary: string;
 }
 
 export type MessageHandler = (

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "YTM+ for YouTube™ Music",
-  "description": "Upgrade your YouTube Music experience with a mini player, lyrics, themes, and integrations!",
+  "description": "Upgrade your YouTube Music experience with a mini player, lyrics, and LastFM & Spotify integrations!",
   "version": "3.2.0",
   "browser_action": {
     "default_icon": "assets/128-icon.png",

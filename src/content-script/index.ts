@@ -1,7 +1,5 @@
 import initializeChangeEmitters from "./changeEmitters";
 import initializePlayerHandlers from "./musicPlayer";
-import initializeTheme from "./theme";
-import initializeSync from "./sync";
 
 function docReady(fn: any) {
   if (
@@ -17,6 +15,4 @@ function docReady(fn: any) {
 docReady(() => {
   initializeChangeEmitters();
   initializePlayerHandlers();
-  initializeTheme();
-  // initializeSync();
 });

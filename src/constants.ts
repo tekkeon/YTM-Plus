@@ -1,4 +1,4 @@
-import { MiniTheme, Options, YTMTheme } from "./types";
+import { MiniTheme, Options } from "./types";
 
 export const MAIN_URL = "https://music.youtube.com/*";
 
@@ -48,23 +48,6 @@ export const DefaultMiniLightTheme: MiniTheme = {
   queueBackground: "#ffffff",
 };
 
-export const DefaultYTMTheme: YTMTheme = {
-  headerFooterBackground: "#000000",
-  headerFooterPrimaryText: "#FFFFFF",
-  headerFooterSecondaryText: "#CCCCCC",
-  headerFooterButtons: "#CCCCCC",
-  mainBackground: "#000000",
-  mainHeading: "#FFFFFF",
-  mainPrimary: "#FFFFFF",
-  mainSecondary: "#CCCCCC",
-  queueBackground: "#000000",
-  queueHeading: "#FFFFFF",
-  queuePrimary: "#FFFFFF",
-  queueSecondary: "#CCCCCC",
-  logo: "#FF0000",
-  logoText: "#FFFFFF",
-};
-
 export const DefaultOptions: Options = {
   lyrics: true,
   mediaKeyControl: true,
@@ -74,5 +57,4 @@ export const DefaultOptions: Options = {
   popoutWindow: false,
   spotifyToYTM: true,
   ytmKeyControl: true,
-  ytmTheme: DefaultYTMTheme,
 };
