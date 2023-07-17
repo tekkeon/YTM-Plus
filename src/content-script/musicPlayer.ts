@@ -1,5 +1,5 @@
 import { MessageType } from "../constants";
-import { getSongInfo, getPlayerState } from "./shared";
+import * as YtmLib from "./lib";
 import { MessageHandler } from "../types";
 
 const initializePlayerHandlers = () => {
@@ -54,7 +54,7 @@ const initializePlayerHandlers = () => {
 
 const handleGetSongInfo: MessageHandler = (payload, sender, sendResponse) => {
   console.log("handleGetSongInfo");
-  sendResponse && sendResponse(getSongInfo());
+  sendResponse && sendResponse(YtmLib.getSongInfo());
 };
 
 const handleGetPlayerState: MessageHandler = (
@@ -63,87 +63,47 @@ const handleGetPlayerState: MessageHandler = (
   sendResponse
 ) => {
   console.log("handleGetPlayerState");
-  sendResponse && sendResponse(getPlayerState());
+  sendResponse && sendResponse(YtmLib.getPlayerState());
 };
 
 const handlePlayPauseTrack: MessageHandler = () => {
   console.log("handlePlayPauseTrack");
-  (document.querySelector(".play-pause-button") as HTMLElement).click();
+  YtmLib.playPauseTrack();
 };
 
 const handleSkipTrack: MessageHandler = () => {
   console.log("handleSkipTrack");
-  (document.querySelector(".next-button") as HTMLElement).click();
+  YtmLib.skipTrack();
 };
 
 const handlePreviousTrack: MessageHandler = () => {
   console.log("handlePreviousTrack");
-  (document.querySelector(".previous-button") as HTMLElement).click();
+  YtmLib.previousTrack();
 };
 
 const handleSetCurrentTrack: MessageHandler = (payload) => {
   console.log("handleSetCurrentTrack");
-  (
-    document
-      .querySelectorAll("ytmusic-player-queue-item")
-      [payload].getElementsByClassName(
-        "ytmusic-play-button-renderer"
-      )[0] as HTMLElement
-  ).click();
+  YtmLib.setCurrentTrack(payload);
 };
 
 const handleSetTrackProgress: MessageHandler = (payload) => {
   console.log("handleSetTrackProgress");
-  var progressBarRect = (
-    document.getElementById("progress-bar") as HTMLElement
-  ).getBoundingClientRect();
-  var y = progressBarRect.y;
-  var x = progressBarRect.width * (payload / 100);
-
-  var clickEvent = document.createEvent("MouseEvents");
-  clickEvent.initMouseEvent(
-    "click",
-    true,
-    true,
-    window,
-    0,
-    0,
-    0,
-    x,
-    y,
-    false,
-    false,
-    false,
-    false,
-    0,
-    null
-  );
-  (document.elementFromPoint(x, y) as HTMLElement).dispatchEvent(clickEvent);
+  YtmLib.setTrackProgress(payload);
 };
 
 const handleSetVolume: MessageHandler = (payload) => {
   console.log("handleSetVolume");
-  const volumeSlider = document.getElementById("volume-slider") as HTMLElement;
-  volumeSlider.setAttribute("value", payload);
-
-  const changeEvent = new Event("change");
-  volumeSlider.dispatchEvent(changeEvent);
+  YtmLib.setVolume(payload);
 };
 
 const handleLikeTrack: MessageHandler = () => {
   console.log("handleLikeTrack");
-  (
-    document.querySelector(".ytmusic-like-button-renderer.like") as HTMLElement
-  ).click();
+  YtmLib.likeTrack();
 };
 
 const handleDislikeTrack: MessageHandler = () => {
   console.log("handleDislikeTrack");
-  (
-    document.querySelector(
-      ".ytmusic-like-button-renderer.dislike"
-    ) as HTMLElement
-  ).click();
+  YtmLib.dislikeTrack();
 };
 
 export default initializePlayerHandlers;

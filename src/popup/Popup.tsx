@@ -10,8 +10,6 @@ export default function App() {
   const { songInfo, loading } = useSongInfo();
   const [showLyricsPanel, setShowLyricsPanel] = useState(false);
 
-  console.log({ loading });
-
   const toggleLyricsPanel = () => {
     setShowLyricsPanel(!showLyricsPanel);
   };

@@ -54,7 +54,6 @@ export interface NetworkState {
 
 export interface Options {
   lyrics: boolean;
-  mediaKeyControl: boolean;
   miniKeyControl: boolean;
   miniTheme: MiniTheme;
   notifications: boolean;

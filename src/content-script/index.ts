@@ -1,5 +1,6 @@
 import initializeChangeEmitters from "./changeEmitters";
 import initializePlayerHandlers from "./musicPlayer";
+import initializeKeyControls from "./keyControls";
 
 function docReady(fn: any) {
   if (
@@ -15,4 +16,5 @@ function docReady(fn: any) {
 docReady(() => {
   initializeChangeEmitters();
   initializePlayerHandlers();
+  initializeKeyControls();
 });

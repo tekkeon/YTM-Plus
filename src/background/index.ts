@@ -2,7 +2,6 @@ import { MessageType } from "../constants";
 import { storage } from "../util/chrome";
 import { DefaultOptions } from "../constants";
 import {
-  handleLaunchSync,
   handleSongUpdated,
   handleScrobble,
   handleSpotifyToYTM,
@@ -62,10 +61,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   switch (message.type) {
-    case MessageType.LAUNCH_SYNC:
-      handleLaunchSync(message.payload, sender, sendResponse);
-      break;
-
     case MessageType.SONG_UPDATED:
       handleSongUpdated(message.payload, sender, sendResponse);
       break;

@@ -50,7 +50,6 @@ export const DefaultMiniLightTheme: MiniTheme = {
 
 export const DefaultOptions: Options = {
   lyrics: true,
-  mediaKeyControl: true,
   miniKeyControl: true,
   miniTheme: DefaultMiniDarkTheme,
   notifications: true,
@@ -58,3 +57,5 @@ export const DefaultOptions: Options = {
   spotifyToYTM: true,
   ytmKeyControl: true,
 };
+
+export const VOLUME_INCREMENT = 5;

@@ -17,7 +17,6 @@ module.exports = {
     options: path.resolve(__dirname, "./src/options/index.tsx"),
     content: path.resolve(__dirname, "./src/content-script/index.ts"),
     background: path.resolve(__dirname, "./src/background/index.ts"),
-    sync: path.resolve(__dirname, "./src/sync/index.tsx"),
     spotify: path.resolve(__dirname, "./src/content-script/spotify/index.tsx"),
     lastfm: path.resolve(__dirname, "./src/content-script/lastfm/index.ts"),
   },
@@ -80,11 +79,6 @@ module.exports = {
       filename: "html/options.html",
       template: "src/options/index.html",
       chunks: ["options"],
-    }),
-    new HtmlWebpackPlugin({
-      filename: "html/sync.html",
-      template: "src/sync/index.html",
-      chunks: ["sync"],
     }),
     new CopyWebpackPlugin({
       patterns: [
