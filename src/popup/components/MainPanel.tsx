@@ -1,16 +1,16 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, createContext, useContext, useEffect } from 'react';
+import styled from 'styled-components';
 
-import AlbumArt from "./AlbumArt";
-import Footer from "./Footer";
-import VolumeSlider from "./VolumeSlider";
-import Queue from "./Queue";
-import { useSongInfo } from "../../contexts/SongInfoContext";
-import { openTab } from "../../util/youtube";
+import AlbumArt from './AlbumArt';
+import Footer from './Footer';
+import VolumeSlider from './VolumeSlider';
+import Queue from './Queue';
+import { useSongInfo } from '../../contexts/SongInfoContext';
+import { openTab } from '../../util/youtube';
 
-import youtubeMusicLogo from "../../assets/YoutubeMusicLogo.png";
-import useStorage from "../../hooks/useStorage";
-import { Options } from "../../types";
+import youtubeMusicLogo from '../../assets/YoutubeMusicLogo.png';
+import useStorage from '../../hooks/useStorage';
+import { Options } from '../../types';
 
 interface IMainPanelContext {
   showVolumeSlider: boolean;
@@ -30,13 +30,35 @@ export default function MainPanel({ toggleLyricsPanel }: MainPanelProps) {
   const { songInfo } = useSongInfo();
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [showQueue, setShowQueue] = useState(false);
-  const { result: options } = useStorage<Options>("options");
+  const { result: options } = useStorage<Options>('options');
 
   const contextValue: IMainPanelContext = {
     showVolumeSlider,
     setShowVolumeSlider,
     showQueue,
     setShowQueue,
+  };
+
+  const renderByLine = () => {
+    if (!songInfo?.artist && !songInfo?.album && !songInfo?.year) {
+      return '-';
+    }
+
+    let line = '';
+
+    if (songInfo?.artist) {
+      line += songInfo?.artist;
+    }
+
+    if (songInfo?.album) {
+      line += ` \u2022 ${songInfo?.album}`;
+    }
+
+    if (songInfo?.year) {
+      line += ` \u2022 ${songInfo?.year}`;
+    }
+
+    return line;
   };
 
   return (
@@ -49,12 +71,8 @@ export default function MainPanel({ toggleLyricsPanel }: MainPanelProps) {
         />
         <AlbumArt />
         <div className="song-info">
-          <h1 className="song-title">{songInfo?.title || "-"}</h1>
-          <h2 className="song-add-info">
-            {songInfo?.artist || songInfo?.album || songInfo?.year
-              ? `${songInfo?.artist} \u2022 ${songInfo?.album} \u2022 ${songInfo?.year}`
-              : "-"}
-          </h2>
+          <h1 className="song-title">{songInfo?.title || '-'}</h1>
+          <h2 className="song-add-info">{renderByLine()}</h2>
         </div>
         <Footer />
         <VolumeSlider />
