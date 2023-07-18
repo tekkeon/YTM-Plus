@@ -1,12 +1,11 @@
-import { MiniTheme, Options } from "./types";
+import { MiniTheme, Options } from './types';
 
-export const MAIN_URL = "https://music.youtube.com/*";
+export const MAIN_URL = 'https://music.youtube.com/*';
 
 export const enum MessageType {
   DISLIKE_TRACK,
   GET_PLAYER_STATE,
   GET_SONG_INFO,
-  LAUNCH_SYNC,
   LIKE_TRACK,
   NOTIFICATION,
   PLAY_PAUSE,
@@ -27,25 +26,25 @@ export const enum MessageType {
 }
 
 export const DefaultMiniDarkTheme: MiniTheme = {
-  primaryText: "#ffffff",
-  secondaryText: "#b1b1b1",
-  backgroundColor: "#1d1d1d",
-  footerBackgroundColor: "#282828",
-  primaryButton: "#dddddd",
-  secondaryButton: "#909090",
-  progressColor: "#ff0000",
-  queueBackground: "#474747",
+  primaryText: '#ffffff',
+  secondaryText: '#b1b1b1',
+  backgroundColor: '#1d1d1d',
+  footerBackgroundColor: '#282828',
+  primaryButton: '#dddddd',
+  secondaryButton: '#909090',
+  progressColor: '#ff0000',
+  queueBackground: '#474747',
 };
 
 export const DefaultMiniLightTheme: MiniTheme = {
-  primaryText: "#1b1b1b",
-  secondaryText: "#8a8a8a",
-  backgroundColor: "#ffffff",
-  footerBackgroundColor: "#e2e2e2",
-  primaryButton: "#000000",
-  secondaryButton: "#909090",
-  progressColor: "#ff0000",
-  queueBackground: "#ffffff",
+  primaryText: '#1b1b1b',
+  secondaryText: '#8a8a8a',
+  backgroundColor: '#ffffff',
+  footerBackgroundColor: '#e2e2e2',
+  primaryButton: '#000000',
+  secondaryButton: '#909090',
+  progressColor: '#ff0000',
+  queueBackground: '#ffffff',
 };
 
 export const DefaultOptions: Options = {

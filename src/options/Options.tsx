@@ -1,28 +1,28 @@
-import React, { useEffect } from "react";
-import { faCogs } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled from "styled-components";
+import React, { useEffect } from 'react';
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
 
-import { authorizeUser, finishAuth } from "../util/lastFM";
-import Option from "./components/Option";
-import PopupThemeEditor from "./components/PopupThemeEditor";
-import { LastFMSession, Options } from "../types";
-import useStorage from "../hooks/useStorage";
+import { authorizeUser, finishAuth } from '../util/lastFM';
+import Option from './components/Option';
+import PopupThemeEditor from './components/PopupThemeEditor';
+import { LastFMSession, Options } from '../types';
+import useStorage from '../hooks/useStorage';
 
 export default function Options() {
-  const { result: options, set: setOptions } = useStorage<Options>("options");
+  const { result: options, set: setOptions } = useStorage<Options>('options');
   const { result: lastFMSession, set: setLastFMSession } =
-    useStorage<LastFMSession>("lastfm-info");
+    useStorage<LastFMSession>('lastfm-info');
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
+    const token = urlParams.get('token');
 
     if (token) {
       finishAuth(token)
         .then((res) => {
           setLastFMSession(res);
-          window.history.replaceState({}, document.title, "/options.html");
+          window.history.replaceState({}, document.title, '/options.html');
         })
         .catch(console.log);
     }
@@ -50,7 +50,7 @@ export default function Options() {
             title="Key controls"
             checked={options?.miniKeyControl}
             description="Spacebar: Play/Pause | Up &amp; Down: Volume | Right &amp; Left: Skip"
-            onClick={() => handleCheckboxClick("miniKeyControl")}
+            onClick={() => handleCheckboxClick('miniKeyControl')}
           />
           <p className="check-option-extra"></p>
         </div>
@@ -59,13 +59,13 @@ export default function Options() {
           <Option
             title="Notifications on song change"
             checked={options?.notifications}
-            onClick={() => handleCheckboxClick("notifications")}
+            onClick={() => handleCheckboxClick('notifications')}
           />
           <Option
             title="Key controls"
             description="Adds next and previous song controls with arrow keys when on YouTube Music page"
             checked={options?.ytmKeyControl}
-            onClick={() => handleCheckboxClick("ytmKeyControl")}
+            onClick={() => handleCheckboxClick('ytmKeyControl')}
           />
         </div>
         <div className="settings-section">
@@ -73,7 +73,7 @@ export default function Options() {
           <Option
             title="Lyrics enabled"
             checked={options?.lyrics}
-            onClick={() => handleCheckboxClick("lyrics")}
+            onClick={() => handleCheckboxClick('lyrics')}
           />
         </div>
         <div className="settings-section">
@@ -82,20 +82,24 @@ export default function Options() {
             title="Enable Spotify Redirect Dialogue"
             description="Shows a popup on Spotify track links asking to listen on YouTube Music"
             checked={options?.spotifyToYTM}
-            onClick={() => handleCheckboxClick("spotifyToYTM")}
+            onClick={() => handleCheckboxClick('spotifyToYTM')}
           />
         </div>
         <div className="settings-section">
           <h2>LastFM</h2>
           <h3 className="last-fm-user">
-            {lastFMSession?.name ?? "No logged-in user."}
+            {lastFMSession?.name ?? 'No logged-in user.'}
           </h3>
+          <p>
+            Note: Per LastFM rules, scrobbles only occur after listening to more
+            than half of a given song.
+          </p>
           <button className="last-fm-button" onClick={authorizeUser}>
             LastFM Login
           </button>
         </div>
         <div className="settings-section">
-          <h2>Mini Player Theme (Beta)</h2>
+          <h2>Mini Player Theme</h2>
           <PopupThemeEditor />
         </div>
       </div>
@@ -134,6 +138,15 @@ const OptionsStyled = styled.div`
       color: rgb(251 12 12);
       margin-bottom: 15px;
       margin-top: 0;
+    }
+
+    & > h3 {
+      color: white;
+    }
+
+    & > p {
+      font-size: 12px;
+      color: rgb(189, 189, 189);
     }
   }
 
