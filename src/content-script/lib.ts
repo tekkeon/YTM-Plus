@@ -69,32 +69,67 @@ export const getPlayerState = (): PlayerState => {
   };
 };
 
-const getQueueItems = (): QueueItem[] => {
-  const queue = [
-    ...document.querySelectorAll(
-      '.side-panel.modular ytmusic-player-queue-item'
-    ),
-  ].map(function (itemElement) {
-    const itemTitle =
-      itemElement?.getElementsByClassName('song-title')?.[0]?.textContent ?? '';
-    const itemArtist =
-      itemElement?.getElementsByClassName('byline')?.[0]?.textContent ?? '';
-    const itemTime =
-      itemElement?.getElementsByClassName('duration')?.[0]?.textContent ?? '';
-    const queueItem: QueueItem = {
-      src:
-        itemElement
-          ?.querySelector('yt-img-shadow.thumbnail img')
-          ?.getAttribute('src') ?? '',
-      title: itemTitle,
-      artist: itemArtist,
-      time: itemTime,
-    };
+const getQueueItemFromElement = (ytmQueueItem: HTMLElement): QueueItem => {
+  const itemTitle =
+    ytmQueueItem?.getElementsByClassName('song-title')?.[0]?.textContent ?? '';
+  const itemArtist =
+    ytmQueueItem?.getElementsByClassName('byline')?.[0]?.textContent ?? '';
+  const itemTime =
+    ytmQueueItem?.getElementsByClassName('duration')?.[0]?.textContent ?? '';
+  const queueItem: QueueItem = {
+    src:
+      ytmQueueItem
+        ?.querySelector('yt-img-shadow.thumbnail img')
+        ?.getAttribute('src') ?? '',
+    title: itemTitle,
+    artist: itemArtist,
+    time: itemTime,
+  };
 
-    return queueItem;
+  return queueItem;
+};
+
+const getQueueItems = (): QueueItem[] => {
+  const queueItemElements = getQueueItemElements();
+
+  return queueItemElements.map(getQueueItemFromElement);
+};
+
+const getQueueItemElementFromWrapperRenderer = (
+  rendererWrapper: HTMLElement
+): HTMLElement => {
+  const renderers = rendererWrapper?.querySelectorAll(
+    'div.ytmusic-playlist-panel-video-wrapper-renderer'
+  );
+
+  const renderer = Array.from(renderers)?.find(
+    (renderer) => !renderer.hasAttribute('hidden')
+  );
+
+  const ytmQueueItem = renderer?.querySelector('ytmusic-player-queue-item');
+
+  return ytmQueueItem as HTMLElement;
+};
+
+const getQueueItemElements = (): HTMLElement[] => {
+  const queue = document.querySelector('.side-panel.modular #queue');
+  const contents = queue?.querySelector('#contents');
+
+  const itemNodes = contents?.childNodes;
+
+  if (!itemNodes) return [];
+
+  const queueItems = Array.from(itemNodes).map((itemNode) => {
+    const itemNodeType = itemNode?.nodeName?.toLowerCase();
+
+    if (itemNodeType === 'ytmusic-player-queue-item') {
+      return itemNode as HTMLElement;
+    } else {
+      return getQueueItemElementFromWrapperRenderer(itemNode as HTMLElement);
+    }
   });
 
-  return queue;
+  return queueItems;
 };
 
 export const playPauseTrack = () => {
@@ -110,13 +145,12 @@ export const previousTrack = () => {
 };
 
 export const setCurrentTrack = (index: number) => {
-  (
-    document
-      .querySelectorAll('ytmusic-player-queue-item')
-      ?.[index]?.getElementsByClassName(
-        'ytmusic-play-button-renderer'
-      )?.[0] as HTMLElement
-  )?.click();
+  const queueItems = getQueueItemElements();
+  const queueItem = queueItems?.[index];
+  const button = queueItem?.querySelector(
+    '.ytmusic-play-button-renderer'
+  ) as HTMLElement;
+  button?.click();
 };
 
 export const setTrackProgress = (progress: number) => {
