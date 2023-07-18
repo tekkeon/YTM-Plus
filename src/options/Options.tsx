@@ -92,7 +92,7 @@ export default function Options() {
           </h3>
           <p>
             Note: Per LastFM rules, scrobbles only occur after listening to more
-            than half of a given song.
+            than half of a song.
           </p>
           <button className="last-fm-button" onClick={authorizeUser}>
             LastFM Login
