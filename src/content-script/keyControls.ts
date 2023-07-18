@@ -1,18 +1,18 @@
-import { storage } from "../util/chrome";
-import { VOLUME_INCREMENT } from "../constants";
-import { skipTrack, previousTrack } from "./lib";
-import { Options } from "../types";
+import { storage } from '../util/chrome';
+import { VOLUME_INCREMENT } from '../constants';
+import { skipTrack, previousTrack } from './lib';
+import { Options } from '../types';
 
 export const initializeKeyControls = () => {
-  document.addEventListener("keydown", async (event) => {
+  document.addEventListener('keydown', async (event) => {
     if (!(await keyControlsEnabled())) return;
 
     switch (event.key) {
-      case "ArrowRight":
+      case 'ArrowRight':
         handleArrowRight();
         break;
 
-      case "ArrowLeft":
+      case 'ArrowLeft':
         handleArrowLeft();
         break;
     }
@@ -20,9 +20,9 @@ export const initializeKeyControls = () => {
 };
 
 const keyControlsEnabled = async () => {
-  const options = (await storage.get("options")) as Options;
+  const options = (await storage.get('options')) as Options;
 
-  return options.ytmKeyControl;
+  return options?.ytmKeyControl;
 };
 
 const handleArrowRight = () => {

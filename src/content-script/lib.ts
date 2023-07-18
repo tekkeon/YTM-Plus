@@ -1,26 +1,26 @@
-import { PlayerState, QueueItem, SongInfo } from "../types";
+import { PlayerState, QueueItem, SongInfo } from '../types';
 
 export const getSongInfo = (): SongInfo => {
   const additionalInfo = document
-    .querySelector(".byline.ytmusic-player-bar")
-    ?.textContent?.split("\u2022");
-  const album = additionalInfo ? additionalInfo[1].trim() : "";
+    .querySelector('.byline.ytmusic-player-bar')
+    ?.textContent?.split('\u2022');
+  const album = additionalInfo?.[1]?.trim() ?? '';
   const albumArtUrl =
-    document.querySelector("#song-image img")?.getAttribute("src") ?? "";
-  const artist = additionalInfo ? additionalInfo[0].trim() : "";
+    document.querySelector('#song-image img')?.getAttribute('src') ?? '';
+  const artist = additionalInfo?.[0]?.trim() ?? '';
   const queue = getQueueItems();
   const title =
-    document.querySelector(".title.ytmusic-player-bar")?.textContent ?? "";
-  const year = additionalInfo ? additionalInfo[2].trim() : "";
+    document.querySelector('.title.ytmusic-player-bar')?.textContent ?? '';
+  const year = additionalInfo?.[2]?.trim() ?? '';
 
   const url =
     (
       document.querySelector(
-        "a.ytp-title-link.yt-uix-sessionlink"
+        'a.ytp-title-link.yt-uix-sessionlink'
       ) as HTMLElement
-    ).getAttribute("href") ?? "";
+    ).getAttribute('href') ?? '';
   const urlObj = new URL(url);
-  const id = urlObj.searchParams.get("v") ?? "";
+  const id = urlObj.searchParams.get('v') ?? '';
 
   return {
     album,
@@ -35,29 +35,29 @@ export const getSongInfo = (): SongInfo => {
 
 export const getPlayerState = (): PlayerState => {
   const isPlaying =
-    (document.querySelector(".play-pause-button") as HTMLElement).title ===
-    "Pause";
+    (document.querySelector('.play-pause-button') as HTMLElement)?.title ===
+    'Pause';
   const progress = (
-    document.querySelector("#progress-bar #sliderKnob") as HTMLElement
-  ).style.left;
+    document.querySelector('#progress-bar #sliderKnob') as HTMLElement
+  )?.style.left;
   const thumbDown =
     (
       document.querySelector(
-        ".ytmusic-like-button-renderer.dislike"
+        '.ytmusic-like-button-renderer.dislike'
       ) as HTMLElement
-    ).getAttribute("aria-pressed") === "true";
+    )?.getAttribute('aria-pressed') === 'true';
   const thumbUp =
     (
       document.querySelector(
-        ".ytmusic-like-button-renderer.like"
+        '.ytmusic-like-button-renderer.like'
       ) as HTMLElement
-    ).getAttribute("aria-pressed") === "true";
-  const trackTime = (document.querySelector(".time-info") as HTMLElement)
-    .textContent;
+    )?.getAttribute('aria-pressed') === 'true';
+  const trackTime = (document.querySelector('.time-info') as HTMLElement)
+    ?.textContent;
   const volume =
-    (document.querySelector("#volume-slider") as HTMLElement).getAttribute(
-      "value"
-    ) ?? "";
+    (document.querySelector('#volume-slider') as HTMLElement)?.getAttribute(
+      'value'
+    ) ?? '';
 
   return {
     isPlaying,
@@ -72,20 +72,20 @@ export const getPlayerState = (): PlayerState => {
 const getQueueItems = (): QueueItem[] => {
   const queue = [
     ...document.querySelectorAll(
-      ".side-panel.modular ytmusic-player-queue-item"
+      '.side-panel.modular ytmusic-player-queue-item'
     ),
   ].map(function (itemElement) {
     const itemTitle =
-      itemElement.getElementsByClassName("song-title")[0].textContent ?? "";
+      itemElement?.getElementsByClassName('song-title')?.[0]?.textContent ?? '';
     const itemArtist =
-      itemElement.getElementsByClassName("byline")[0].textContent ?? "";
+      itemElement?.getElementsByClassName('byline')?.[0]?.textContent ?? '';
     const itemTime =
-      itemElement.getElementsByClassName("duration")[0].textContent ?? "";
+      itemElement?.getElementsByClassName('duration')?.[0]?.textContent ?? '';
     const queueItem: QueueItem = {
       src:
         itemElement
-          .querySelector("yt-img-shadow.thumbnail img")
-          ?.getAttribute("src") ?? "",
+          ?.querySelector('yt-img-shadow.thumbnail img')
+          ?.getAttribute('src') ?? '',
       title: itemTitle,
       artist: itemArtist,
       time: itemTime,
@@ -98,37 +98,37 @@ const getQueueItems = (): QueueItem[] => {
 };
 
 export const playPauseTrack = () => {
-  (document.querySelector(".play-pause-button") as HTMLElement).click();
+  (document.querySelector('.play-pause-button') as HTMLElement)?.click();
 };
 
 export const skipTrack = () => {
-  (document.querySelector(".next-button") as HTMLElement).click();
+  (document.querySelector('.next-button') as HTMLElement)?.click();
 };
 
 export const previousTrack = () => {
-  (document.querySelector(".previous-button") as HTMLElement).click();
+  (document.querySelector('.previous-button') as HTMLElement)?.click();
 };
 
 export const setCurrentTrack = (index: number) => {
   (
     document
-      .querySelectorAll("ytmusic-player-queue-item")
-      [index].getElementsByClassName(
-        "ytmusic-play-button-renderer"
-      )[0] as HTMLElement
-  ).click();
+      .querySelectorAll('ytmusic-player-queue-item')
+      ?.[index]?.getElementsByClassName(
+        'ytmusic-play-button-renderer'
+      )?.[0] as HTMLElement
+  )?.click();
 };
 
 export const setTrackProgress = (progress: number) => {
   var progressBarRect = (
-    document.getElementById("progress-bar") as HTMLElement
-  ).getBoundingClientRect();
-  var y = progressBarRect.y;
-  var x = progressBarRect.width * (progress / 100);
+    document.getElementById('progress-bar') as HTMLElement
+  )?.getBoundingClientRect();
+  var y = progressBarRect?.y;
+  var x = progressBarRect?.width * (progress / 100);
 
-  var clickEvent = document.createEvent("MouseEvents");
+  var clickEvent = document.createEvent('MouseEvents');
   clickEvent.initMouseEvent(
-    "click",
+    'click',
     true,
     true,
     window,
@@ -144,27 +144,27 @@ export const setTrackProgress = (progress: number) => {
     0,
     null
   );
-  (document.elementFromPoint(x, y) as HTMLElement).dispatchEvent(clickEvent);
+  (document.elementFromPoint(x, y) as HTMLElement)?.dispatchEvent(clickEvent);
 };
 
 export const setVolume = (volume: string) => {
-  const volumeSlider = document.getElementById("volume-slider") as HTMLElement;
-  volumeSlider.setAttribute("value", volume);
+  const volumeSlider = document.getElementById('volume-slider') as HTMLElement;
+  volumeSlider?.setAttribute('value', volume);
 
-  const changeEvent = new Event("change");
-  volumeSlider.dispatchEvent(changeEvent);
+  const changeEvent = new Event('change');
+  volumeSlider?.dispatchEvent(changeEvent);
 };
 
 export const likeTrack = () => {
   (
-    document.querySelector(".ytmusic-like-button-renderer.like") as HTMLElement
-  ).click();
+    document.querySelector('.ytmusic-like-button-renderer.like') as HTMLElement
+  )?.click();
 };
 
 export const dislikeTrack = () => {
   (
     document.querySelector(
-      ".ytmusic-like-button-renderer.dislike"
+      '.ytmusic-like-button-renderer.dislike'
     ) as HTMLElement
-  ).click();
+  )?.click();
 };
