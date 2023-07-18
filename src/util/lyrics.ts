@@ -1,65 +1,113 @@
+import levenshtein from 'fast-levenshtein';
 import config from '../config';
 
 export const getLyrics = (artist: string, track: string) => {
-  var requestUrl = `https://api.audd.io/?api_token=${config.lyrics_api_key}&method=findLyrics&q=${artist} ${track}`
+  track = sanitizeTitle(track);
+
+  const artistEncoded = encodeURIComponent(artist);
+  const trackEncoded = encodeURIComponent(track);
+
+  var requestUrl = `https://api.audd.io/?api_token=${config.lyrics_api_key}&method=findLyrics&q=${artistEncoded} ${trackEncoded}`;
 
   return fetch(requestUrl)
-    .then(result => result.json())
-    .then(json => {
-      return extractLyrics(json, artist, track);
-    })
-}
+    .then((result) => result.json())
+    .then((json) => {
+      const lyrics = extractLyrics(json, artist, track);
+      console.info('Found lyrics: ', lyrics);
+      return lyrics;
+    });
+};
 
 const extractLyrics = (response: any, artist: string, track: string) => {
-  for (var i = 0; i < 10; i++) {
-    if (response.result[i]) {
-      var info = response.result[i]
-      console.log(info)
-      if (isMatch(info.artist.toLowerCase().trim(), artist.toLowerCase().trim(), info.title.toLowerCase().trim(), track.toLowerCase().trim())) {
-        const decodedLyrics = decodeLyrics(info.lyrics);
-        return (decodedLyrics as string).split(/(?:\r\n|\r|\n)/).filter(lyric => lyric && lyric.length);
+  let result: string[] | null = null;
+
+  response.result.forEach((info: any) => {
+    if (
+      !result &&
+      info.lyrics &&
+      isMatch(
+        info.artist.toLowerCase().trim(),
+        artist.toLowerCase().trim(),
+        info.title.toLowerCase().trim(),
+        track.toLowerCase().trim()
+      )
+    ) {
+      const decodedLyrics = decodeLyrics(info.lyrics);
+
+      if (decodedLyrics === '') {
+        return null;
       }
+
+      result = decodedLyrics
+        .split(/(?:\r\n|\r|\n)/)
+        .filter((lyric) => lyric && lyric.length);
     }
-  }
+  });
 
-  return null;
-}
+  return result;
+};
 
-const isMatch = (artist1: string, artist2: string, title1: string, title2: string) => {
-  var artistMatches = false;
-  var titleMatches = false;
+const equalIsh = (a: string, b: string) => {
+  return levenshtein.get(a, b) < 2;
+};
 
-  if (artist1.includes(artist2) || artist2.includes(artist1)) {
-    artistMatches = true;
-  }
+const standardizeMatchText = (text: string) => {
+  return text.toLowerCase().trim();
+};
 
-  if (title1.includes(title2) || title2.includes(title1)) {
-    titleMatches = true;
-  }
-  
-  artist1 = artist1.replace(/and|\&/g, ',').replace(/\s/g, '')
-  artist2 = artist1.replace(/and|\&/g, ',').replace(/\s/g, '')
+/**
+ * Removes any text in parentheses or square brackets from the title.
+ */
+const sanitizeTitle = (title: string) => {
+  return title.replace(/ *\([^)]*\) */g, '').replace(/ *\[[^)]*\] */g, '');
+};
 
-  var artist1List = artist1.split(',');
-  var artist2List = artist2.split(',');
+const checkArtistMatches = (artist1: string, artist2: string) => {
+  const splitter = /,|and|&/;
 
-  artist1List.forEach(function(art1) {
-    if (artist2List.includes(art1.trim())) {
-      artistMatches = true;
-    }
-  })
+  const artist1List = artist1.split(splitter);
+  const artist2List = artist2.split(splitter);
 
-  artist2List.forEach(function(art2) {
-    if (artist1List.includes(art2)) {
-      artistMatches = true;
-    }
-  })
+  return artist1List.some((artist1) =>
+    artist2List.some((artist2) => {
+      return equalIsh(
+        standardizeMatchText(artist1),
+        standardizeMatchText(artist2)
+      );
+    })
+  );
+};
+
+const checkTitleMatches = (title1: string, title2: string) => {
+  title1 = sanitizeTitle(title1);
+  title2 = sanitizeTitle(title2);
+
+  return equalIsh(standardizeMatchText(title1), standardizeMatchText(title2));
+};
+
+const isMatch = (
+  artist1: string,
+  artist2: string,
+  title1: string,
+  title2: string
+) => {
+  var artistMatches = checkArtistMatches(artist1, artist2);
+  var titleMatches = checkTitleMatches(title1, title2);
+
+  console.log({
+    artist1,
+    artist2,
+    title1,
+    title2,
+    artistMatches,
+    titleMatches,
+  });
 
   return artistMatches && titleMatches;
-}
+};
 
 export const decodeLyrics = (html: string) => {
-  var txt = document.createElement("textarea");
+  var txt = document.createElement('textarea');
   txt.innerHTML = html;
   return txt.value;
-}
+};
