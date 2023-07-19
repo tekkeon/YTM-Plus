@@ -43,6 +43,8 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
     margin: 0;
     color: white;
     font-weight: 500;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 18px;
   }
 
   .check-option-extra {

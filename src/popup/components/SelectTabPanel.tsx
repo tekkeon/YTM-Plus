@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTabs } from '../../contexts/TabContext';
 import { Tab } from './Tab';
+import { DefaultMiniDarkTheme } from '../../constants';
 
 export default function SelectTabPanel() {
   const { tabs, setTabs } = useTabs();
@@ -31,10 +32,10 @@ export default function SelectTabPanel() {
 }
 
 const StyledSelectTabsPanel = styled.div`
-  padding: 10px;
+  padding: 0 10px;
   width: 100%;
   height: 100%;
-  background-color: ${(props) => props.theme.backgroundColor};
+  background-color: ${DefaultMiniDarkTheme.backgroundColor};
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -43,14 +44,14 @@ const StyledSelectTabsPanel = styled.div`
 
   & > .title-text {
     text-align: center;
-    color: ${(props) => props.theme.primaryText};
-    margin: 5px 0;
+    color: ${DefaultMiniDarkTheme.primaryText};
+    margin: 15px 0 5px;
     font-weight: 600;
   }
 
   & > .description-text {
     text-align: center;
-    color: ${(props) => props.theme.secondaryText};
+    color: ${DefaultMiniDarkTheme.secondaryText};
     margin: 5px 0;
     font-size: 14px;
   }

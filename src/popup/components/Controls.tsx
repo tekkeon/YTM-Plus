@@ -76,9 +76,7 @@ export default function Controls() {
   };
 
   const onVolumeMouseOut = () => {
-    setTimeout(() => {
-      mpContext?.setShowVolumeSlider(false);
-    }, 1000);
+    mpContext?.setShowVolumeSlider(false);
   };
 
   const onPlayPauseClick = () => {

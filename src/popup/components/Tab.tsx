@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import imageComingSoon from '../../assets/image-coming-soon.png';
+import { DefaultMiniDarkTheme } from '../../constants';
 
 interface ITabProps {
   isActive: boolean;
@@ -43,8 +44,8 @@ const StyledTab = styled.div`
   display: flex;
   width: 100%;
   height: 70px;
-  background-color: ${(props) => props.theme.footerBackgroundColor};
-  color: ${(props) => props.theme.primaryText};
+  background-color: transparent;
+  color: ${DefaultMiniDarkTheme.primaryText};
   border-radius: 5px;
   margin-bottom: 10px;
   border: 1px solid transparent;
@@ -61,14 +62,15 @@ const StyledTab = styled.div`
     margin-left: 5px;
 
     & > .song-title {
-      margin: 5px 0;
+      margin: 0;
       font-weight: 600;
+      font-size: 13px;
     }
 
     & > .song-artist {
-      margin: 5px 0;
+      margin: 0;
       font-weight: 600;
-      color: ${(props) => props.theme.secondaryText};
+      color: ${DefaultMiniDarkTheme.secondaryText};
     }
   }
 

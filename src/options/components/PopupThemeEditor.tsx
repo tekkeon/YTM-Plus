@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, css } from 'styled-components';
 import Popup from '../../popup/Popup';
 import useStorage from '../../hooks/useStorage';
 import { MiniTheme, Options } from '../../types';
@@ -27,11 +27,13 @@ export default function PopupThemeEditor() {
       <ThemeOptions>
         <DefaultButton
           onClick={() => set({ ...options, miniTheme: DefaultMiniDarkTheme })}
+          color="dark"
         >
           Default Dark
         </DefaultButton>
         <DefaultButton
           onClick={() => set({ ...options, miniTheme: DefaultMiniLightTheme })}
+          color="light"
         >
           Default Light
         </DefaultButton>
@@ -117,15 +119,29 @@ const ThemeOptions = styled.div`
   }
 `;
 
-const DefaultButton = styled.button`
+interface DefaultButtonProps {
+  color: 'light' | 'dark';
+}
+
+const DefaultButton = styled.button<DefaultButtonProps>`
   background: none;
-  border-radius: 3px;
-  border: 1px solid red;
-  color: rgb(232, 72, 68);
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 14px;
   margin-right: 10px;
   margin-top: 10px;
   outline: none;
-  padding: 8px 16px;
+  padding: 4px 13px;
+
+  ${({ color }) =>
+    color === 'light'
+      ? css`
+          background-color: #ffffff;
+          color: #232323;
+        `
+      : css`
+          background-color: #4b4b4b;
+          color: #ffffff;
+        `}
 `;

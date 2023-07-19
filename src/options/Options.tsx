@@ -111,7 +111,7 @@ const OptionsStyled = styled.div`
   .settings-page-title {
     font-size: 24px;
     font-weight: 500;
-    width: 650px;
+    width: 800px;
     margin: 20px auto 10px auto;
     color: rgb(232, 72, 68);
 
@@ -121,12 +121,12 @@ const OptionsStyled = styled.div`
   }
 
   .settings-page-container {
-    width: 675px;
+    width: 700px;
     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.164);
     margin: 20px auto;
     background-color: rgb(40 40 40);
     border-radius: 3px;
-    padding: 20px 80px;
+    padding: 20px 50px;
   }
 
   .settings-section {
@@ -142,6 +142,7 @@ const OptionsStyled = styled.div`
 
     & > h3 {
       color: white;
+      font-family: 'Open Sans', sans-serif;
     }
 
     & > p {
@@ -175,7 +176,7 @@ const OptionsStyled = styled.div`
     border: 1px solid rgb(232, 72, 68);
     border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .last-fm-button:hover,

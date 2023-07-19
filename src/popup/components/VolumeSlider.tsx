@@ -43,15 +43,14 @@ interface VolumeSliderStyledProps {
 const VolumeSliderStyled = styled.div<VolumeSliderStyledProps>`
   position: absolute;
   left: 0px;
-  bottom: 56px;
+  bottom: 0px;
   height: 110px;
   width: 40px;
-  background-color: ${(props) => props.theme.footerBackgroundColor};
-  border: 1px solid rgb(51, 51, 51);
-  border-bottom: none;
-  border-left: none;
+  background-color: transparent;
   display: ${(props) => (props.show ? 'block' : 'none')};
   z-index: 105;
+  padding-bottom: 56px;
+  left: 3px;
 
   &:hover {
     display: block;
@@ -63,7 +62,8 @@ const VolumeSliderStyled = styled.div<VolumeSliderStyledProps>`
     height: 95px;
     position: absolute;
     width: 25%;
-    border: 1px solid #757575;
+    border: 1px solid ${(props) => props.theme.secondaryText};
+    border-radius: 10px;
   }
 
   .current-volume {
@@ -72,6 +72,7 @@ const VolumeSliderStyled = styled.div<VolumeSliderStyledProps>`
     background-color: ${(props) => props.theme.progressColor};
     position: absolute;
     bottom: 0;
+    border-radius: 10px;
   }
 `;
 
