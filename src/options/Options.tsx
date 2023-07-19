@@ -45,7 +45,16 @@ export default function Options() {
       </h1>
       <div className="settings-page-container">
         <div className="settings-section">
-          <h2>Mini Player</h2>
+          <h2>Mini Player Theme</h2>
+          <PopupThemeEditor />
+        </div>
+        <div className="settings-section">
+          <h2>Mini Player Settings</h2>
+          <Option
+            title="Lyrics button enabled"
+            checked={options?.lyrics}
+            onClick={() => handleCheckboxClick('lyrics')}
+          />
           <Option
             title="Key controls"
             checked={options?.miniKeyControl}
@@ -55,32 +64,27 @@ export default function Options() {
           <p className="check-option-extra"></p>
         </div>
         <div className="settings-section">
-          <h2>YouTube Music Website</h2>
+          <h2>Notifications</h2>
           <Option
             title="Notifications on song change"
             checked={options?.notifications}
             onClick={() => handleCheckboxClick('notifications')}
           />
+        </div>
+        <div className="settings-section">
+          <h2>YouTube Music Website</h2>
           <Option
             title="Key controls"
-            description="Adds next and previous song controls with arrow keys when on YouTube Music page"
+            description="Adds next and previous song controls with right and left arrow keys on YouTube Music page."
             checked={options?.ytmKeyControl}
             onClick={() => handleCheckboxClick('ytmKeyControl')}
           />
         </div>
         <div className="settings-section">
-          <h2>Lyrics</h2>
-          <Option
-            title="Lyrics enabled"
-            checked={options?.lyrics}
-            onClick={() => handleCheckboxClick('lyrics')}
-          />
-        </div>
-        <div className="settings-section">
           <h2>Spotify</h2>
           <Option
-            title="Enable Spotify Redirect Dialogue"
-            description="Shows a popup on Spotify track links asking to listen on YouTube Music"
+            title="Enable Spotify-to-YTM popup"
+            description="Shows a popup on Spotify track links with a quick link to the same song on YouTube Music."
             checked={options?.spotifyToYTM}
             onClick={() => handleCheckboxClick('spotifyToYTM')}
           />
@@ -88,7 +92,13 @@ export default function Options() {
         <div className="settings-section">
           <h2>LastFM</h2>
           <h3 className="last-fm-user">
-            {lastFMSession?.name ?? 'No logged-in user.'}
+            {lastFMSession?.name ? (
+              <>
+                <span>Signed in as</span> {lastFMSession.name}
+              </>
+            ) : (
+              'No logged-in user.'
+            )}
           </h3>
           <p>
             Note: Per LastFM rules, scrobbles only occur after listening to more
@@ -97,10 +107,6 @@ export default function Options() {
           <button className="last-fm-button" onClick={authorizeUser}>
             LastFM Login
           </button>
-        </div>
-        <div className="settings-section">
-          <h2>Mini Player Theme</h2>
-          <PopupThemeEditor />
         </div>
       </div>
     </OptionsStyled>
@@ -125,7 +131,7 @@ const OptionsStyled = styled.div`
     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.164);
     margin: 20px auto;
     background-color: rgb(40 40 40);
-    border-radius: 3px;
+    border-radius: 15px;
     padding: 20px 50px;
   }
 
@@ -133,16 +139,21 @@ const OptionsStyled = styled.div`
     margin-bottom: 35px;
 
     & > h2 {
-      font-size: 22px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 400;
       color: rgb(232, 72, 68);
       margin-bottom: 15px;
       margin-top: 0;
     }
 
-    & > h3 {
+    .last-fm-user {
       color: white;
-      font-family: 'Open Sans', sans-serif;
+      font-weight: 500;
+
+      span {
+        color: rgb(189, 189, 189);
+        font-weight: 400;
+      }
     }
 
     & > p {
@@ -156,16 +167,6 @@ const OptionsStyled = styled.div`
     margin-top: 2px;
     display: block;
     text-align: center;
-  }
-
-  .last-fm-user {
-    color: rgb(189, 189, 189);
-    font-weight: 400;
-
-    span {
-      color: white;
-      font-weight: 600;
-    }
   }
 
   .last-fm-button {

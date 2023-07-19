@@ -61,9 +61,10 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
     background-color: ${(props) =>
       props.checked ? 'rgb(232, 72, 68)' : 'white'};
     display: inline-block;
-    border: 1px solid rgb(141, 141, 141);
     height: 15px;
     width: 15px;
+    padding: 2px;
+    border-radius: 4px;
   }
 `;
 
