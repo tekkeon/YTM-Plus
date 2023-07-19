@@ -1,16 +1,17 @@
-import { useEffect } from "react";
-import { messaging } from "../util/chrome";
-import { MessageType, VOLUME_INCREMENT } from "../constants";
-import { usePlayerState } from "../contexts/PlayerStateContext";
-import useStorage from "./useStorage";
-import { Options } from "../types";
+import { useEffect, useMemo } from 'react';
+import { MessageType, VOLUME_INCREMENT } from '../constants';
+import useStorage from './useStorage';
+import { Options } from '../types';
+import { useTabs } from '../contexts/TabContext';
 
 export const useKeyControls = () => {
-  const playerState = usePlayerState();
-  const { result: options } = useStorage<Options>("options");
+  const { tabs, sendMessageToTabs } = useTabs();
+  const { result: options } = useStorage<Options>('options');
+
+  const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const handleSpacebar = () => {
-    messaging.sendToYTMTab({ type: MessageType.PLAY_PAUSE });
+    sendMessageToTabs({ type: MessageType.PLAY_PAUSE });
   };
 
   const handleArrowUp = () => {
@@ -20,7 +21,7 @@ export const useKeyControls = () => {
       const currentVolumeNum = parseFloat(currentVolume);
       const newVolume = currentVolumeNum + VOLUME_INCREMENT;
 
-      messaging.sendToYTMTab({
+      sendMessageToTabs({
         type: MessageType.SET_VOLUME,
         payload: newVolume.toString(),
       });
@@ -34,7 +35,7 @@ export const useKeyControls = () => {
       const currentVolumeNum = parseFloat(currentVolume);
       const newVolume = currentVolumeNum - VOLUME_INCREMENT;
 
-      messaging.sendToYTMTab({
+      sendMessageToTabs({
         type: MessageType.SET_VOLUME,
         payload: newVolume.toString(),
       });
@@ -42,11 +43,11 @@ export const useKeyControls = () => {
   };
 
   const handleArrowRight = () => {
-    messaging.sendToYTMTab({ type: MessageType.SKIP_TRACK });
+    sendMessageToTabs({ type: MessageType.SKIP_TRACK });
   };
 
   const handleArrowLeft = () => {
-    messaging.sendToYTMTab({ type: MessageType.PREVIOUS_TRACK });
+    sendMessageToTabs({ type: MessageType.PREVIOUS_TRACK });
   };
 
   useEffect(() => {
@@ -54,32 +55,32 @@ export const useKeyControls = () => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
-        case " ":
+        case ' ':
           handleSpacebar();
           break;
 
-        case "ArrowUp":
+        case 'ArrowUp':
           handleArrowUp();
           break;
 
-        case "ArrowDown":
+        case 'ArrowDown':
           handleArrowDown();
           break;
 
-        case "ArrowRight":
+        case 'ArrowRight':
           handleArrowRight();
           break;
 
-        case "ArrowLeft":
+        case 'ArrowLeft':
           handleArrowLeft();
           break;
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [playerState?.volume, options?.miniKeyControl]);
 };

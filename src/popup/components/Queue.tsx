@@ -1,23 +1,25 @@
-import React from "react";
-import styled from "styled-components";
-import QueueItem from "./QueueItem";
-import { useSongInfo } from "../../contexts/SongInfoContext";
-import { useMainPanelContext } from "./MainPanel";
-import { messaging } from "../../util/chrome";
-import { MessageType } from "../../constants";
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import QueueItem from './QueueItem';
+import { useMainPanelContext } from './MainPanel';
+import { MessageType } from '../../constants';
 
-import closeIcon from "../../assets/x.png";
+import closeIcon from '../../assets/x.png';
+import { useTabs } from '../../contexts/TabContext';
 
 export default function Queue() {
   const mpContext = useMainPanelContext();
-  const { songInfo } = useSongInfo();
+  // const { songInfo } = useSongInfo();
+  const { tabs, sendMessageToTabs } = useTabs();
+
+  const songInfo = useMemo(() => tabs[0]?.songInfo, [tabs]);
 
   const onCloseClick = () => {
     mpContext?.setShowQueue(false);
   };
 
   const onQueueItemClick = (trackIndex: number) => {
-    messaging.sendToYTMTab({
+    sendMessageToTabs({
       type: MessageType.SET_CURRENT_TRACK,
       payload: trackIndex,
     });
@@ -55,7 +57,7 @@ interface QueueStyledProps {
 const QueueStyled = styled.div<QueueStyledProps>`
   position: absolute;
   z-index: 3;
-  top: ${(props) => (props.show ? "0" : "100%")};
+  top: ${(props) => (props.show ? '0' : '100%')};
   background-color: ${(props) => props.theme.queueBackground};
   height: 350px;
   width: 260px;
@@ -72,25 +74,27 @@ const QueueStyled = styled.div<QueueStyledProps>`
     position: absolute;
     top: 0;
     background-color: ${(props) => props.theme.footerBackgroundColor};
+    font-weight: 500;
 
     &.active {
       position: fixed;
     }
 
     & > h1 {
-      font-size: 20px;
+      font-size: 18px;
       color: ${(props) => props.theme.primaryText};
       text-align: center;
       margin: 0;
       margin-top: 7px;
+      font-weight: 500;
     }
 
     & > h1 > img {
-      height: 15px;
-      width: 15px;
+      height: 12px;
+      width: 12px;
       position: absolute;
-      right: 10px;
-      top: 12px;
+      right: 12px;
+      top: 15px;
       cursor: pointer;
     }
   }

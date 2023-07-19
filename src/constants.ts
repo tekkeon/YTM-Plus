@@ -28,22 +28,22 @@ export const enum MessageType {
 export const DefaultMiniDarkTheme: MiniTheme = {
   primaryText: '#ffffff',
   secondaryText: '#b1b1b1',
-  backgroundColor: '#1d1d1d',
-  footerBackgroundColor: '#282828',
+  backgroundColor: '#141414',
+  footerBackgroundColor: '#212121',
   primaryButton: '#dddddd',
   secondaryButton: '#909090',
-  progressColor: '#ff0000',
-  queueBackground: '#474747',
+  progressColor: '#e84844',
+  queueBackground: '#141414',
 };
 
 export const DefaultMiniLightTheme: MiniTheme = {
-  primaryText: '#1b1b1b',
-  secondaryText: '#8a8a8a',
+  primaryText: '#e84844',
+  secondaryText: '#727272',
   backgroundColor: '#ffffff',
-  footerBackgroundColor: '#e2e2e2',
-  primaryButton: '#000000',
-  secondaryButton: '#909090',
-  progressColor: '#ff0000',
+  footerBackgroundColor: '#3b3b3b',
+  primaryButton: '#ffffff',
+  secondaryButton: '#B7B7B7',
+  progressColor: '#e84844',
   queueBackground: '#ffffff',
 };
 

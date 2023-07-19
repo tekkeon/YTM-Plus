@@ -113,7 +113,7 @@ const OptionsStyled = styled.div`
     font-weight: 500;
     width: 650px;
     margin: 20px auto 10px auto;
-    color: #da0000;
+    color: rgb(232, 72, 68);
 
     i {
       margin-right: 10px;
@@ -124,7 +124,7 @@ const OptionsStyled = styled.div`
     width: 675px;
     box-shadow: 0px 0px 12px 3px rgba(0, 0, 0, 0.164);
     margin: 20px auto;
-    background-color: #4c4c4c;
+    background-color: rgb(40 40 40);
     border-radius: 3px;
     padding: 20px 80px;
   }
@@ -133,9 +133,9 @@ const OptionsStyled = styled.div`
     margin-bottom: 35px;
 
     & > h2 {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 600;
-      color: rgb(251 12 12);
+      color: rgb(232, 72, 68);
       margin-bottom: 15px;
       margin-top: 0;
     }
@@ -169,10 +169,10 @@ const OptionsStyled = styled.div`
 
   .last-fm-button {
     padding: 4px 13px;
-    background-color: #da0000;
+    background-color: rgb(232, 72, 68);
     color: white;
     outline: none;
-    border: 1px solid #da0000;
+    border: 1px solid rgb(232, 72, 68);
     border-radius: 5px;
     cursor: pointer;
     font-size: 13px;
@@ -181,6 +181,6 @@ const OptionsStyled = styled.div`
   .last-fm-button:hover,
   .save-button:hover {
     background-color: white;
-    color: #da0000;
+    color: rgb(232, 72, 68);
   }
 `;

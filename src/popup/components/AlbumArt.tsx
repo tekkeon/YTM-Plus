@@ -1,35 +1,37 @@
-import React from "react";
-import styled from "styled-components";
-import thumbUpOutline from "../../assets/thumbupoutline.png";
-import thumbDownOutline from "../../assets/thumbdownoutline.png";
-import thumbUpFilled from "../../assets/thumbupfilled.png";
-import thumbDownFilled from "../../assets/thumbdownfilled.png";
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import thumbUpOutline from '../../assets/thumbupoutline.png';
+import thumbDownOutline from '../../assets/thumbdownoutline.png';
+import thumbUpFilled from '../../assets/thumbupfilled.png';
+import thumbDownFilled from '../../assets/thumbdownfilled.png';
 
-import { useSongInfo } from "../../contexts/SongInfoContext";
-import { usePlayerState } from "../../contexts/PlayerStateContext";
-import { messaging } from "../../util/chrome";
-import { MessageType } from "../../constants";
+import { messaging } from '../../util/chrome';
+import { MessageType } from '../../constants';
+import { useTabs } from '../../contexts/TabContext';
 
 export default function AlbumArt() {
-  const { songInfo } = useSongInfo();
-  const playerState = usePlayerState();
+  const { tabs, sendMessageToTabs } = useTabs();
+
+  const songInfo = useMemo(() => tabs[0]?.songInfo, [tabs]);
+  const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const onThumbUpClick = () => {
-    messaging.sendToYTMTab({
+    sendMessageToTabs({
       type: MessageType.LIKE_TRACK,
       payload: !playerState?.thumbUp,
     });
   };
 
   const onThumbDownClick = () => {
-    messaging.sendToYTMTab({
+    sendMessageToTabs({
       type: MessageType.DISLIKE_TRACK,
       payload: !playerState?.thumbDown,
     });
   };
 
   return (
-    <AlbumArtStyled url={songInfo?.albumArtUrl ?? ""}>
+    <AlbumArtStyled url={songInfo?.albumArtUrl ?? ''}>
+      <div className="album-glow"></div>
       <div className="album-image"></div>
       <div className="album-overlay">
         <div className="thumbs">
@@ -44,7 +46,7 @@ export default function AlbumArt() {
             onClick={onThumbDownClick}
           />
         </div>
-        <p className="times">{playerState?.trackTime || "0:00 / 0:00"}</p>
+        <p className="times">{playerState?.trackTime || '0:00 / 0:00'}</p>
       </div>
     </AlbumArtStyled>
   );
@@ -55,15 +57,28 @@ interface AlbumArtStyledProps {
 }
 
 const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
-  border: 1px solid ${(props) => props.theme.secondaryText};
-  height: 180px;
-  width: 180px;
-  margin: 15px auto 15px auto;
+  height: 170px;
+  width: 170px;
+  margin: 25px auto 15px auto;
   position: relative;
+
+  & > .album-glow {
+    position: absolute;
+    background: ${(props) =>
+      props.url ? `url(${props.url})` : 'linear-gradient(#424242, #333333)'};
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain !important;
+    height: 100%;
+    width: 100%;
+    transform: scale(1.01);
+    filter: blur(20px);
+    border-radius: 10px;
+  }
 
   & > .album-image {
     background: ${(props) =>
-      props.url ? `url(${props.url})` : "linear-gradient(#424242, #333333)"};
+      props.url ? `url(${props.url})` : 'linear-gradient(#424242, #333333)'};
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain !important;
@@ -71,6 +86,8 @@ const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
     width: 100%;
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    border-radius: 10px;
   }
 
   &:hover {

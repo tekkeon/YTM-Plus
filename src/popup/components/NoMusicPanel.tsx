@@ -1,13 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import { openTab } from "../../util/youtube";
-import HeadphoneIcon from "../../assets/HeadphoneIcon.png";
-import { DefaultMiniDarkTheme } from "../../constants";
+import React from 'react';
+import styled from 'styled-components';
+import { tabs as chromeTabs } from '../../util/chrome';
+import HeadphoneIcon from '../../assets/HeadphoneIcon.png';
+import { DefaultMiniDarkTheme } from '../../constants';
+import { useTabs } from '../../contexts/TabContext';
 
 export default function NoMusicPanel() {
+  const { tabs } = useTabs();
+
   const handleOpenTab = () => {
-    console.log("open tab", typeof openTab);
-    openTab();
+    if (tabs.length !== 1) return;
+
+    chromeTabs.openTab(tabs[0].tab.id!);
   };
 
   return (

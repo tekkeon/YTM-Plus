@@ -10,7 +10,12 @@ interface OptionProps {
   title: string;
 }
 
-export default function Option({ onClick, title, checked, description }: OptionProps) {
+export default function Option({
+  onClick,
+  title,
+  checked,
+  description,
+}: OptionProps) {
   return (
     <OptionCheckStyled checked={checked}>
       <div className="main">
@@ -19,11 +24,7 @@ export default function Option({ onClick, title, checked, description }: OptionP
         </div>
         <h3>{title}</h3>
       </div>
-      {
-        description ?
-          <p className="check-option-extra">{description}</p> :
-          null
-      }
+      {description ? <p className="check-option-extra">{description}</p> : null}
     </OptionCheckStyled>
   );
 }
@@ -47,23 +48,25 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
   .check-option-extra {
     color: rgb(175, 175, 175);
 
-    a, a:visited {
+    a,
+    a:visited {
       color: rgb(175, 175, 175);
     }
   }
 
   .checkbox {
     margin: 0px 15px 0px 5px;
-    background-color: ${props => props.checked ? '#e80606' : 'white'};
+    background-color: ${(props) =>
+      props.checked ? 'rgb(232, 72, 68)' : 'white'};
     display: inline-block;
     border: 1px solid rgb(141, 141, 141);
     height: 15px;
     width: 15px;
   }
-`
+`;
 
 const CheckMarkIcon = styled(FontAwesomeIcon)`
   color: white;
   margin: 1.5px;
   display: block;
-`
+`;

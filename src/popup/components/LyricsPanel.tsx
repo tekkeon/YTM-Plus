@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useSongInfo } from "../../contexts/SongInfoContext";
-import { NetworkState } from "../../types";
-import { getLyrics } from "../../util/lyrics";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { NetworkState } from '../../types';
+import { getLyrics } from '../../util/lyrics';
+import { useTabs } from '../../contexts/TabContext';
 
 const renderLyrics = (lyrics: string[]) => {
   return lyrics.map((lyric) => {
@@ -20,9 +20,10 @@ export default function LyricsPanel() {
     data: null,
     error: null,
   });
-  const { songInfo } = useSongInfo();
-  const track = songInfo?.title ?? "";
-  const artist = songInfo?.artist ?? "";
+  const { tabs } = useTabs();
+  const songInfo = tabs[0]?.songInfo;
+  const track = songInfo?.title ?? '';
+  const artist = songInfo?.artist ?? '';
 
   useEffect(() => {
     setLyrics({ ...lyrics, loading: true });

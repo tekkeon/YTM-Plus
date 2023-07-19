@@ -1,7 +1,5 @@
-// import promisify from './promisify';
-import { runtime } from 'webpack';
 import { MAIN_URL } from '../constants';
-import { Message, SongInfo } from '../types';
+import { Message } from '../types';
 
 export const storage = {
   set(items: any): Promise<void> {
@@ -17,11 +15,11 @@ export const storage = {
   },
   get(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      chrome.storage.sync.get(key, result => {
+      chrome.storage.sync.get(key, (result) => {
         if (chrome.runtime.lastError?.message) {
-          reject(chrome.runtime.lastError.message)
+          reject(chrome.runtime.lastError.message);
         } else {
-          resolve(result[key])
+          resolve(result[key]);
         }
       });
     });
@@ -35,21 +33,21 @@ export const storage = {
           resolve();
         }
       });
-    })
-  }
-}
+    });
+  },
+};
 
 export const messaging = {
-  sendToTab(tabId: number, message: Message) {
-    return new Promise((resolve, reject) => {
+  sendToTab<T>(tabId: number, message: Message) {
+    return new Promise<T>((resolve, reject) => {
       chrome.tabs.sendMessage(tabId, message, (response) => {
         resolve(response);
       });
-    })
+    });
   },
   sendToYTMTab(message: Message, excludedTabs?: number[]): Promise<any> {
     return new Promise((resolve, reject) => {
-      chrome.tabs.query({ url: MAIN_URL }, tabs => {
+      chrome.tabs.query({ url: MAIN_URL }, (tabs) => {
         console.log('Sending message:', message);
         if (!tabs[0]?.id) {
           resolve(false);
@@ -58,18 +56,34 @@ export const messaging = {
             resolve(response);
           });
         }
-      })
-    })
+      });
+    });
   },
   sendToRuntime(message: Message): Promise<any> {
     return new Promise((resolve, reject) => {
       chrome.runtime.sendMessage(message, (response) => {
-        if (chrome.runtime.lastError && !chrome.runtime.lastError.message?.includes('The message port closed')) {
+        if (
+          chrome.runtime.lastError &&
+          !chrome.runtime.lastError.message?.includes('The message port closed')
+        ) {
           console.warn(chrome.runtime.lastError.message);
         } else {
           resolve(response);
         }
       });
-    })
-  }
-}
+    });
+  },
+};
+
+export const tabs = {
+  getYtmTabs(): Promise<chrome.tabs.Tab[]> {
+    return new Promise((resolve, reject) => {
+      chrome.tabs.query({ url: MAIN_URL }, (tabs) => {
+        resolve(tabs);
+      });
+    });
+  },
+  openTab(tabId: number) {
+    chrome.tabs.update(tabId, { highlighted: true });
+  },
+};

@@ -1,29 +1,38 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import styled from 'styled-components';
-import { usePlayerState } from '../../contexts/PlayerStateContext';
 import { useMainPanelContext } from './MainPanel';
-import { messaging } from '../../util/chrome';
 import { MessageType } from '../../constants';
+import { useTabs } from '../../contexts/TabContext';
 
 export default function VolumeSlider() {
   const mpContext = useMainPanelContext();
-  const playerState = usePlayerState();
+  // const playerState = usePlayerState();
+  const { tabs, sendMessageToTabs } = useTabs();
+
+  const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    messaging.sendToYTMTab({
+    sendMessageToTabs({
       type: MessageType.SET_VOLUME,
-      payload: e.target.value
-    })
-  }
+      payload: e.target.value,
+    });
+  };
 
   return (
-    <VolumeSliderStyled show={mpContext?.showVolumeSlider ?? false} volume={playerState?.volume}>
+    <VolumeSliderStyled
+      show={mpContext?.showVolumeSlider ?? false}
+      volume={playerState?.volume}
+    >
       <div className="volume-slider-background">
         <div className="current-volume"></div>
       </div>
-      <VolumeSliderInput type="range" className="volume-slider" onChange={onChange}></VolumeSliderInput>
+      <VolumeSliderInput
+        type="range"
+        className="volume-slider"
+        onChange={onChange}
+      ></VolumeSliderInput>
     </VolumeSliderStyled>
-  )
+  );
 }
 
 interface VolumeSliderStyledProps {
@@ -37,11 +46,11 @@ const VolumeSliderStyled = styled.div<VolumeSliderStyledProps>`
   bottom: 56px;
   height: 110px;
   width: 40px;
-  background-color: ${props => props.theme.footerBackgroundColor};
+  background-color: ${(props) => props.theme.footerBackgroundColor};
   border: 1px solid rgb(51, 51, 51);
   border-bottom: none;
   border-left: none;
-  display: ${props => props.show ? 'block' : 'none'};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   z-index: 105;
 
   &:hover {
@@ -59,12 +68,12 @@ const VolumeSliderStyled = styled.div<VolumeSliderStyledProps>`
 
   .current-volume {
     width: 100%;
-    height: ${props => `${props.volume || '0'}%`};
-    background-color: ${props => props.theme.progressColor};
+    height: ${(props) => `${props.volume || '0'}%`};
+    background-color: ${(props) => props.theme.progressColor};
     position: absolute;
     bottom: 0;
   }
-`
+`;
 
 const VolumeSliderInput = styled.input`
   writing-mode: bt-lr;
@@ -94,4 +103,4 @@ const VolumeSliderInput = styled.input`
     height: 12px;
     width: 12px;
   }
-`
+`;

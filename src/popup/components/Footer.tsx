@@ -1,30 +1,35 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import styled from 'styled-components';
 import { MessageType } from '../../constants';
-import { usePlayerState } from '../../contexts/PlayerStateContext';
-import { messaging } from '../../util/chrome';
 
 import Controls from './Controls';
+import { useTabs } from '../../contexts/TabContext';
 
 export default function Footer() {
-  const playerState = usePlayerState();
+  const { tabs, sendMessageToTabs } = useTabs();
+
+  const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    messaging.sendToYTMTab({
+    sendMessageToTabs({
       type: MessageType.SET_TRACK_PROGRESS,
-      payload: e.target.value
-    })
-  }
+      payload: e.target.value,
+    });
+  };
 
   return (
     <FooterStyled progress={playerState?.progress}>
       <div className="song-progress-container">
         <div className="song-progress"></div>
-        <input type="range" className="progress-slider" onChange={onChange}></input>
+        <input
+          type="range"
+          className="progress-slider"
+          onChange={onChange}
+        ></input>
       </div>
       <Controls />
     </FooterStyled>
-  )
+  );
 }
 
 interface FooterStyledProps {
@@ -35,11 +40,11 @@ const FooterStyled = styled.div<FooterStyledProps>`
   position: absolute;
   bottom: 0;
   width: 260px;
-  height: 60px;
-  background-color: ${props => props.theme.footerBackgroundColor};
+  height: 55px;
+  background-color: ${(props) => props.theme.footerBackgroundColor};
   z-index: 5;
 
-  &:hover .song-progress-container{
+  &:hover .song-progress-container {
     height: 5px;
     margin-top: -3px;
   }
@@ -52,9 +57,9 @@ const FooterStyled = styled.div<FooterStyledProps>`
     transition: height 0.2s ease-in-out, margin 0.2s ease-in-out;
 
     & > .song-progress {
-      width: ${props => props.progress || '0%'};
+      width: ${(props) => props.progress || '0%'};
       height: 100%;
-      background-color: ${props => props.theme.progressColor};
+      background-color: ${(props) => props.theme.progressColor};
     }
 
     & > .progress-slider {
@@ -86,4 +91,4 @@ const FooterStyled = styled.div<FooterStyledProps>`
       }
     }
   }
-`
+`;

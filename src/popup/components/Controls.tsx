@@ -1,12 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { useMainPanelContext } from "./MainPanel";
-import { usePlayerState } from "../../contexts/PlayerStateContext";
-import { messaging } from "../../util/chrome";
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import { useMainPanelContext } from './MainPanel';
 
-import { MessageType } from "../../constants";
-import { Prev, Pause, Play, Next, Volume, Hamburger } from "../Icons";
-import useKeyControls from "../../hooks/useKeyControls";
+import { MessageType } from '../../constants';
+import { Prev, Pause, Play, Next, Volume, Hamburger } from '../Icons';
+import useKeyControls from '../../hooks/useKeyControls';
+import { useTabs } from '../../contexts/TabContext';
 
 const ControlsStyled = styled.div`
   display: flex;
@@ -27,43 +26,46 @@ const ControlsStyled = styled.div`
   & > .controls-next {
     width: 20px;
     height: 20px;
-    padding: 20px 0px;
+    padding: 17px 0px;
     margin: 0px 15px;
     fill: ${(props) => props.theme.primaryButton};
   }
 
   & > .controls-play-pause {
-    padding: 15px 0px;
+    padding: 12px 0px;
     margin: 0px 10px;
     fill: ${(props) => props.theme.primaryButton};
   }
 
   & > .controls-volume {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     margin-right: 20px;
-    padding: 22px 0px;
+    padding: 18px 0px;
     fill: ${(props) => props.theme.secondaryButton};
   }
 
   & > .controls-hamburger {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     margin-left: 20px;
-    padding: 22px 0px;
+    padding: 17px 0px;
     fill: ${(props) => props.theme.secondaryButton};
+    stroke: ${(props) => props.theme.secondaryButton};
   }
 
-  & > .controls-play-pause[src="src/pause.png"] {
+  & > .controls-play-pause[src='src/pause.png'] {
     width: 40px;
     margin: 0px 5px;
   }
 `;
 
 export default function Controls() {
+  const { tabs, sendMessageToTabs } = useTabs();
   const mpContext = useMainPanelContext();
-  const playerState = usePlayerState();
   useKeyControls();
+
+  const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const onQueueClick = () => {
     mpContext?.setShowQueue(!mpContext.showQueue);
@@ -80,15 +82,15 @@ export default function Controls() {
   };
 
   const onPlayPauseClick = () => {
-    messaging.sendToYTMTab({ type: MessageType.PLAY_PAUSE });
+    sendMessageToTabs({ type: MessageType.PLAY_PAUSE });
   };
 
   const onNextClick = () => {
-    messaging.sendToYTMTab({ type: MessageType.SKIP_TRACK });
+    sendMessageToTabs({ type: MessageType.SKIP_TRACK });
   };
 
   const onPrevClick = () => {
-    messaging.sendToYTMTab({ type: MessageType.PREVIOUS_TRACK });
+    sendMessageToTabs({ type: MessageType.PREVIOUS_TRACK });
   };
 
   return (
