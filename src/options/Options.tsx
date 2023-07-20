@@ -24,7 +24,7 @@ export default function Options() {
           setLastFMSession(res);
           window.history.replaceState({}, document.title, '/options.html');
         })
-        .catch(console.log);
+        .catch(console.error);
     }
   }, []);
 

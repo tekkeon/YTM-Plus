@@ -28,7 +28,6 @@ export const TabProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const enrichTabs = async (tabs: chrome.tabs.Tab[]) => {
-    console.log('enrichTabs');
     const enrichedTabs = await Promise.all(
       tabs.map(async (tab) => {
         const songInfo = (await messaging.sendToTab(tab.id!, {

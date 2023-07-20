@@ -1,6 +1,6 @@
-import { MessageType } from "../constants";
-import * as YtmLib from "./lib";
-import { MessageHandler } from "../types";
+import { MessageType } from '../constants';
+import * as YtmLib from './lib';
+import { MessageHandler } from '../types';
 
 const initializePlayerHandlers = () => {
   chrome.runtime.onMessage.addListener(function (
@@ -53,7 +53,6 @@ const initializePlayerHandlers = () => {
 };
 
 const handleGetSongInfo: MessageHandler = (payload, sender, sendResponse) => {
-  console.log("handleGetSongInfo");
   sendResponse && sendResponse(YtmLib.getSongInfo());
 };
 
@@ -62,47 +61,38 @@ const handleGetPlayerState: MessageHandler = (
   sender,
   sendResponse
 ) => {
-  console.log("handleGetPlayerState");
   sendResponse && sendResponse(YtmLib.getPlayerState());
 };
 
 const handlePlayPauseTrack: MessageHandler = () => {
-  console.log("handlePlayPauseTrack");
   YtmLib.playPauseTrack();
 };
 
 const handleSkipTrack: MessageHandler = () => {
-  console.log("handleSkipTrack");
   YtmLib.skipTrack();
 };
 
 const handlePreviousTrack: MessageHandler = () => {
-  console.log("handlePreviousTrack");
   YtmLib.previousTrack();
 };
 
 const handleSetCurrentTrack: MessageHandler = (payload) => {
-  console.log("handleSetCurrentTrack");
   YtmLib.setCurrentTrack(payload);
 };
 
 const handleSetTrackProgress: MessageHandler = (payload) => {
-  console.log("handleSetTrackProgress");
   YtmLib.setTrackProgress(payload);
 };
 
 const handleSetVolume: MessageHandler = (payload) => {
-  console.log("handleSetVolume");
   YtmLib.setVolume(payload);
 };
 
 const handleLikeTrack: MessageHandler = () => {
-  console.log("handleLikeTrack");
   YtmLib.likeTrack();
 };
 
 const handleDislikeTrack: MessageHandler = () => {
-  console.log("handleDislikeTrack");
   YtmLib.dislikeTrack();
 };
 

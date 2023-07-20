@@ -48,7 +48,6 @@ export const messaging = {
   sendToYTMTab(message: Message, excludedTabs?: number[]): Promise<any> {
     return new Promise((resolve, reject) => {
       chrome.tabs.query({ url: MAIN_URL }, (tabs) => {
-        console.log('Sending message:', message);
         if (!tabs[0]?.id) {
           resolve(false);
         } else {

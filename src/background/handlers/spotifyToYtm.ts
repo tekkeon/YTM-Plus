@@ -87,8 +87,6 @@ const getTopResultSongInfo = (apiResult: any): PartialSongInfo | null => {
     apiResult.contents?.tabbedSearchResultsRenderer?.tabs?.[0]?.tabRenderer
       ?.content?.sectionListRenderer?.contents?.[0]?.musicCardShelfRenderer;
 
-  console.log({ resultTrack });
-
   if (!resultTrack) {
     return null;
   }
@@ -117,7 +115,6 @@ const getTopResultSongInfo = (apiResult: any): PartialSongInfo | null => {
 const extractSongInfoOptions = (text: string): (PartialSongInfo | null)[] => {
   const regex = /search',.*data\: '(.*)'\}\)\;ytcfg/;
   const matches = text.match(regex);
-  console.log({ matches });
   let match = matches?.[1];
 
   if (!match) {
@@ -128,15 +125,12 @@ const extractSongInfoOptions = (text: string): (PartialSongInfo | null)[] => {
   let decodedMatch = decodeURIComponent(match);
   decodedMatch = decodedMatch.replace(/\\\"/g, '"');
 
-  console.log({ decodedMatch });
-
   let parsedMatch: any = {};
 
   try {
     parsedMatch = JSON.parse(decodedMatch);
-    console.log({ parsedMatch });
   } catch (e) {
-    console.log("Couldn't parse JSON");
+    console.info("Couldn't parse JSON");
     console.error(e);
     return [];
   }

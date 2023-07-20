@@ -94,15 +94,6 @@ const isMatch = (
   var artistMatches = checkArtistMatches(artist1, artist2);
   var titleMatches = checkTitleMatches(title1, title2);
 
-  console.log({
-    artist1,
-    artist2,
-    title1,
-    title2,
-    artistMatches,
-    titleMatches,
-  });
-
   return artistMatches && titleMatches;
 };
 

@@ -114,7 +114,7 @@ const tryScrobble = () => {
 const scrobbleTrack = () => {
   const songInfo = getSongInfo();
   if (!scrobbledTracks.has(songInfo.title + songInfo.artist + songInfo.album)) {
-    console.log('Scrobbling...');
+    console.info('Scrobbling...');
     scrobbledTracks.add(songInfo.title + songInfo.artist + songInfo.album);
     messaging.sendToRuntime({
       type: MessageType.SCROBBLE_TRACK,

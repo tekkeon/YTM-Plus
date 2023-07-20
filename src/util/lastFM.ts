@@ -1,14 +1,14 @@
-import { storage } from "./chrome";
-import config from "../config";
-import { SongInfo } from "../types";
-import md5 from "md5";
+import { storage } from './chrome';
+import config from '../config';
+import { SongInfo } from '../types';
+import md5 from 'md5';
 
 export const authorizeUser = () => {
-  const redirect_url = "https://www.ytmplus.app/lastfm";
+  const redirect_url = 'https://www.ytmplus.app/lastfm';
   var url =
-    "http://www.last.fm/api/auth/?api_key=" +
+    'http://www.last.fm/api/auth/?api_key=' +
     config.last_fm_api_key +
-    "&cb=" +
+    '&cb=' +
     redirect_url;
   window.location.href = url;
 };
@@ -16,18 +16,18 @@ export const authorizeUser = () => {
 export const finishAuth = (token: string) => {
   const data = {
     api_key: config.last_fm_api_key,
-    method: "auth.getSession",
+    method: 'auth.getSession',
     token: token,
   };
   const api_sig = generateSignature(data);
   const url =
-    "https://ws.audioscrobbler.com/2.0/?method=auth.getSession&api_key=" +
+    'https://ws.audioscrobbler.com/2.0/?method=auth.getSession&api_key=' +
     config.last_fm_api_key +
-    "&token=" +
+    '&token=' +
     token +
-    "&api_sig=" +
+    '&api_sig=' +
     api_sig +
-    "&format=json";
+    '&format=json';
 
   return fetch(url)
     .then((res) => res.json())
@@ -35,14 +35,12 @@ export const finishAuth = (token: string) => {
 };
 
 export const getCurrentSession = () => {
-  return storage.get("lastfm-info");
+  return storage.get('lastfm-info');
 };
 
 export const scrobbleTrack = (songInfo: SongInfo) => {
-  console.log(songInfo);
   getCurrentSession().then((session) => {
     if (!session) {
-      console.log("No LastFM user.");
       return;
     }
 
@@ -50,7 +48,7 @@ export const scrobbleTrack = (songInfo: SongInfo) => {
     var n = d.getTime() / 1000;
     var data = {
       api_key: config.last_fm_api_key,
-      method: "track.scrobble",
+      method: 'track.scrobble',
       sk: session.key,
       artist: songInfo.artist,
       track: songInfo.title,
@@ -59,26 +57,26 @@ export const scrobbleTrack = (songInfo: SongInfo) => {
     };
     var api_sig = generateSignature(data);
     var url =
-      "https://ws.audioscrobbler.com/2.0/?method=track.scrobble&" +
-      "api_key=" +
+      'https://ws.audioscrobbler.com/2.0/?method=track.scrobble&' +
+      'api_key=' +
       config.last_fm_api_key +
-      "&api_sig=" +
+      '&api_sig=' +
       api_sig +
-      "&sk=" +
+      '&sk=' +
       session.key +
-      "&artist=" +
+      '&artist=' +
       encodeURIComponent(songInfo.artist) +
-      "&track=" +
+      '&track=' +
       encodeURIComponent(songInfo.title) +
-      "&album=" +
+      '&album=' +
       encodeURIComponent(songInfo.album) +
-      "&timestamp=" +
+      '&timestamp=' +
       n +
-      "&format=json";
+      '&format=json';
 
     var xhr;
     xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
+    xhr.open('POST', url);
     return xhr.send();
   });
 };
@@ -87,29 +85,29 @@ export const loveTrack = (songInfo: SongInfo) => {
   getCurrentSession().then((user) => {
     var data = {
       api_key: config.last_fm_api_key,
-      method: "track.love",
+      method: 'track.love',
       sk: user.key,
       artist: songInfo.artist,
       track: songInfo.title,
     };
     var api_sig = generateSignature(data);
     var url =
-      "https://ws.audioscrobbler.com/2.0/?method=track.love&" +
-      "api_key=" +
+      'https://ws.audioscrobbler.com/2.0/?method=track.love&' +
+      'api_key=' +
       config.last_fm_api_key +
-      "&api_sig=" +
+      '&api_sig=' +
       api_sig +
-      "&sk=" +
+      '&sk=' +
       user.key +
-      "&artist=" +
+      '&artist=' +
       encodeURIComponent(songInfo.artist) +
-      "&track=" +
+      '&track=' +
       encodeURIComponent(songInfo.title) +
-      "&format=json";
+      '&format=json';
 
     var xhr;
     xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
+    xhr.open('POST', url);
     return xhr.send();
   });
 };
@@ -118,35 +116,35 @@ export const unloveTrack = async (songInfo: SongInfo) => {
   getCurrentSession().then((user) => {
     var data = {
       api_key: config.last_fm_api_key,
-      method: "track.unlove",
+      method: 'track.unlove',
       sk: user.key,
       artist: songInfo.artist,
       track: songInfo.title,
     };
     var api_sig = generateSignature(data);
     var url =
-      "https://ws.audioscrobbler.com/2.0/?method=track.unlove&" +
-      "api_key=" +
+      'https://ws.audioscrobbler.com/2.0/?method=track.unlove&' +
+      'api_key=' +
       config.last_fm_api_key +
-      "&api_sig=" +
+      '&api_sig=' +
       api_sig +
-      "&sk=" +
+      '&sk=' +
       user.key +
-      "&artist=" +
+      '&artist=' +
       encodeURIComponent(songInfo.artist) +
-      "&track=" +
+      '&track=' +
       encodeURIComponent(songInfo.title) +
-      "&format=json";
+      '&format=json';
 
     var xhr;
     xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
+    xhr.open('POST', url);
     return xhr.send();
   });
 };
 
 const generateSignature = (data: any) => {
-  var ss = "";
+  var ss = '';
   var st: string[] = [];
   Object.keys(data).forEach(function (key) {
     st.push(key);

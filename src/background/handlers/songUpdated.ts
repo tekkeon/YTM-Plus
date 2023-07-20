@@ -7,7 +7,6 @@ export const handleSongUpdated: MessageHandler = (payload) => {
   storage.get('options').then((options) => {
     if (options.notifications) {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        console.log({ tabs });
         // Don't notifify if user is on music.youtube tab
         if (!tabs[0]?.url?.includes('music.youtube')) {
           // Don't notifiy if user has popup open

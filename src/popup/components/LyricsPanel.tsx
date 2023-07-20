@@ -30,7 +30,6 @@ export default function LyricsPanel() {
 
     getLyrics(artist, track)
       .then((lyricsResult) => {
-        console.log(lyrics);
         setLyrics({
           ...lyrics,
           loading: false,
