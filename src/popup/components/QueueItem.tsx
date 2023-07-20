@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import ytmMiniLogo from '../../assets/128-icon.png';
@@ -21,12 +21,26 @@ export default function QueueItem({
   active,
   onClick,
 }: QueueItemProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
   if (!imageUrl.match(/https:\/\/.*\.com\/.*/)) {
     imageUrl = imageComingSoon;
   }
 
+  useEffect(() => {
+    if (active && ref.current) {
+      setTimeout(() => {
+        ref.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'start',
+        });
+      }, 500);
+    }
+  }, [active]);
+
   return (
-    <QueueItemStyled active={active} onClick={onClick}>
+    <QueueItemStyled ref={ref} active={active} onClick={onClick}>
       <img
         className="queue-item-image"
         src={(!active && imageUrl) || ytmMiniLogo}
@@ -48,11 +62,12 @@ const QueueItemStyled = styled.div<QueueItemsStyledProps>`
   height: 50px;
   margin: auto;
   padding: 5px 0px;
-  border: 1px solid transparent;
-  border-bottom: 1px solid rgb(107, 107, 107);
+  border: 1px solid ${(props) =>
+    props.active ? props.theme.primaryText : 'transparent'}};
+  border-bottom: 1px solid ${(props) =>
+    props.active ? props.theme.primaryText : 'rgb(107, 107, 107)'};
   cursor: pointer;
-  background-color: ${(props) =>
-    props.active ? props.theme.secondaryText : props.theme.queueBackground};
+  background-color: ${(props) => props.theme.queueBackground};
 
   &:hover {
     border: 1px solid ${(props) => props.theme.primaryText};
@@ -71,8 +86,7 @@ const QueueItemStyled = styled.div<QueueItemsStyledProps>`
   }
 
   .queue-item-title {
-    color: ${(props) =>
-      props.active ? props.theme.queueBackground : props.theme.primaryText};
+    color: ${(props) => props.theme.primaryText};
     font-size: 14px;
     font-weight: 500;
     margin: 7px 0px 0px;
@@ -83,8 +97,7 @@ const QueueItemStyled = styled.div<QueueItemsStyledProps>`
   }
 
   .queue-item-artist {
-    color: ${(props) =>
-      props.active ? props.theme.queueBackground : props.theme.secondaryText};
+    color: ${(props) => props.theme.secondaryText};
     font-size: 14px;
     margin: 0px;
     font-weight: 300;

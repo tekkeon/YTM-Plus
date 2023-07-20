@@ -41,7 +41,10 @@ export default function Queue() {
             artist={queueItem.artist}
             time={queueItem.time}
             imageUrl={queueItem.src}
-            active={queueItem.title == songInfo?.title}
+            active={
+              mpContext?.showQueue === true &&
+              queueItem.title == songInfo?.title
+            }
             onClick={() => onQueueItemClick(index)}
           />
         ))}

@@ -1,25 +1,25 @@
-import { MessageType } from "../../constants";
-import { messaging, storage } from "../../util/chrome";
-import React from "react";
-import ReactDOM from "react-dom";
-import RedirectOption from "./RedirectOption";
-import { Options } from "../../types";
+import { MessageType } from '../../constants';
+import { messaging, storage } from '../../util/chrome';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import RedirectOption from './RedirectOption';
+import { Options, SongInfo } from '../../types';
 
 var oldHref = document.location.href;
 
 function docReady(fn: any) {
   if (
-    document.readyState === "complete" ||
-    document.readyState === "interactive"
+    document.readyState === 'complete' ||
+    document.readyState === 'interactive'
   ) {
     setTimeout(fn, 1);
   } else {
-    document.addEventListener("DOMContentLoaded", fn);
+    document.addEventListener('DOMContentLoaded', fn);
   }
 }
 
 docReady(async () => {
-  const options = (await storage.get("options")) as Options;
+  const options = (await storage.get('options')) as Options;
   if (!options.spotifyToYTM) {
     return;
   }
@@ -46,11 +46,11 @@ const tryYTMRedirect = () => {
 
   let spotifyTrackId: string | undefined;
 
-  if (urlParams.get("highlight")) {
-    spotifyTrackId = urlParams.get("highlight")?.split(":")[2];
-  } else if (window.location.pathname.includes("track")) {
-    const urlParts = window.location.pathname.split("/");
-    spotifyTrackId = urlParts[urlParts.length - 1].split("?")[0];
+  if (urlParams.get('highlight')) {
+    spotifyTrackId = urlParams.get('highlight')?.split(':')[2];
+  } else if (window.location.pathname.includes('track')) {
+    const urlParts = window.location.pathname.split('/');
+    spotifyTrackId = urlParts[urlParts.length - 1].split('?')[0];
   }
 
   if (spotifyTrackId) {
@@ -61,20 +61,20 @@ const tryYTMRedirect = () => {
           trackId: spotifyTrackId,
         },
       })
-      .then((id) => appendRedirectOption(id));
+      .then(appendRedirectOption);
   }
 };
 
-const appendRedirectOption = (id: string) => {
-  let redirectOptionDiv = document.getElementById("redirect-option-div");
+const appendRedirectOption = (songInfo: Omit<SongInfo, 'queue' | 'year'>) => {
+  let redirectOptionDiv = document.getElementById('redirect-option-div');
   if (redirectOptionDiv) {
     document.body.removeChild(redirectOptionDiv);
   }
 
-  redirectOptionDiv = document.createElement("div");
-  redirectOptionDiv.style.display = "block";
-  redirectOptionDiv.id = "redirect-option-div";
+  redirectOptionDiv = document.createElement('div');
+  redirectOptionDiv.style.display = 'block';
+  redirectOptionDiv.id = 'redirect-option-div';
   document.body.appendChild(redirectOptionDiv);
 
-  ReactDOM.render(<RedirectOption id={id} />, redirectOptionDiv);
+  ReactDOM.render(<RedirectOption songInfo={songInfo} />, redirectOptionDiv);
 };

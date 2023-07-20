@@ -88,6 +88,7 @@ const AlbumArtStyled = styled.div<AlbumArtStyledProps>`
     transition: opacity 0.3s ease-in-out;
     position: absolute;
     border-radius: 10px;
+    border: 1px solid ${(props) => props.theme.primaryText}30;
   }
 
   &:hover {
