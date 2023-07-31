@@ -85,4 +85,7 @@ export const tabs = {
   openTab(tabId: number) {
     chrome.tabs.update(tabId, { highlighted: true });
   },
+  createYtmTab() {
+    chrome.tabs.create({ url: MAIN_URL });
+  }
 };

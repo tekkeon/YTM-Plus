@@ -9,7 +9,10 @@ export default function NoMusicPanel() {
   const { tabs } = useTabs();
 
   const handleOpenTab = () => {
-    if (tabs.length !== 1) return;
+    if (tabs.length === 0) {
+      chromeTabs.createYtmTab();
+      return;
+    }
 
     chromeTabs.openTab(tabs[0].tab.id!);
   };
