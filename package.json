@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "@types/fast-levenshtein": "^0.0.2",
+    "@types/uuid": "^9.0.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.1",
     "babel-polyfill": "^6.26.0",
@@ -66,6 +67,7 @@
     "socket.io-client": "^3.1.2",
     "spotify-web-api-js": "^1.5.1",
     "styled-components": "^5.2.1",
-    "util": "^0.12.3"
+    "util": "^0.12.3",
+    "uuid": "^9.0.1"
   }
 }

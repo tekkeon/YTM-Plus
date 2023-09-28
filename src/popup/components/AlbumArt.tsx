@@ -8,6 +8,7 @@ import thumbDownFilled from '../../assets/thumbdownfilled.png';
 import { messaging } from '../../util/chrome';
 import { MessageType } from '../../constants';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 export default function AlbumArt() {
   const { tabs, sendMessageToTabs } = useTabs();
@@ -15,7 +16,11 @@ export default function AlbumArt() {
   const songInfo = useMemo(() => tabs[0]?.songInfo, [tabs]);
   const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
+  const sendThumbsUpEvent = useSendEvent({ name: 'thumbs_up' });
+  const sendThumbsDownEvent = useSendEvent({ name: 'thumbs_down' });
+
   const onThumbUpClick = () => {
+    sendThumbsUpEvent();
     sendMessageToTabs({
       type: MessageType.LIKE_TRACK,
       payload: !playerState?.thumbUp,
@@ -23,6 +28,7 @@ export default function AlbumArt() {
   };
 
   const onThumbDownClick = () => {
+    sendThumbsDownEvent();
     sendMessageToTabs({
       type: MessageType.DISLIKE_TRACK,
       payload: !playerState?.thumbDown,

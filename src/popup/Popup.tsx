@@ -6,14 +6,17 @@ import NoMusicPanel from './components/NoMusicPanel';
 import LoadingPanel from './components/LoadingPanel';
 import { useTabs } from '../contexts/TabContext';
 import SelectTabPanel from './components/SelectTabPanel';
+import { useSendEvent } from '../util/analytics';
 
 export default function App() {
   const { tabs, loading: tabsLoading } = useTabs();
   const [showLyricsPanel, setShowLyricsPanel] = useState(false);
+  const sendLyricsToggleEvent = useSendEvent({ name: 'lyrics_toggled' });
 
   const songInfo = tabs[0]?.songInfo;
 
   const toggleLyricsPanel = () => {
+    sendLyricsToggleEvent();
     setShowLyricsPanel(!showLyricsPanel);
   };
 

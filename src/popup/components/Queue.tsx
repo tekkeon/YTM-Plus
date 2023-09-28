@@ -6,11 +6,12 @@ import { MessageType } from '../../constants';
 
 import closeIcon from '../../assets/x.png';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 export default function Queue() {
   const mpContext = useMainPanelContext();
-  // const { songInfo } = useSongInfo();
   const { tabs, sendMessageToTabs } = useTabs();
+  const sendQueueItemPlayedEvent = useSendEvent({ name: 'queue_item_played' });
 
   const songInfo = useMemo(() => tabs[0]?.songInfo, [tabs]);
 
@@ -19,6 +20,7 @@ export default function Queue() {
   };
 
   const onQueueItemClick = (trackIndex: number) => {
+    sendQueueItemPlayedEvent();
     sendMessageToTabs({
       type: MessageType.SET_CURRENT_TRACK,
       payload: trackIndex,

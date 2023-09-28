@@ -8,6 +8,7 @@ import Option from './components/Option';
 import PopupThemeEditor from './components/PopupThemeEditor';
 import { LastFMSession, Options } from '../types';
 import useStorage from '../hooks/useStorage';
+import { sendEvent } from '../util/analytics';
 
 export default function Options() {
   const { result: options, set: setOptions } = useStorage<Options>('options');
@@ -21,6 +22,12 @@ export default function Options() {
     if (token) {
       finishAuth(token)
         .then((res) => {
+          sendEvent({
+            name: 'lastfm_logged_in',
+            params: {
+              onUpdate: false,
+            },
+          });
           setLastFMSession(res);
           window.history.replaceState({}, document.title, '/options.html');
         })
@@ -29,6 +36,14 @@ export default function Options() {
   }, []);
 
   const handleCheckboxClick = (id: keyof Options) => {
+    sendEvent({
+      name: `${id}_option_changed`,
+      params: {
+        enabled: !options[id],
+        onUpdate: false,
+      },
+    });
+
     const newOptions = {
       ...options,
       [id]: !options[id],

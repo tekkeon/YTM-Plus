@@ -6,6 +6,8 @@ import {
   handleScrobble,
   handleSpotifyToYTM,
 } from './handlers';
+import { LastFMSession, Options } from '../types';
+import { Event, sendEvent, sendEvents } from '../util/analytics';
 
 const injectContentScriptOnInstall = () => {
   const contentScripts = chrome.runtime.getManifest().content_scripts;
@@ -26,6 +28,38 @@ const injectContentScriptOnInstall = () => {
   }
 };
 
+const sendAnalyticsOnUpdate = async () => {
+  const options = (await storage.get('options')) as Options;
+  const lastFmInfo = (await storage.get('lastfm-info')) as LastFMSession;
+
+  const events: Event[] = [];
+
+  Object.keys(options)
+    .filter((key) => !['miniTheme', 'popoutWindow'].includes(key))
+    .forEach((key) => {
+      events.push({
+        name: `${key}_option_changed`,
+        params: {
+          enabled: options[key as keyof Options] ?? false,
+          onUpdate: true,
+        },
+      });
+    });
+
+  console.log(lastFmInfo);
+
+  if (lastFmInfo) {
+    events.push({
+      name: 'lastfm_logged_in',
+      params: {
+        onUpdate: true,
+      },
+    });
+  }
+
+  sendEvents(events);
+};
+
 chrome.runtime.onInstalled.addListener(function (details) {
   injectContentScriptOnInstall();
 
@@ -44,17 +78,20 @@ chrome.runtime.onInstalled.addListener(function (details) {
       // Add any new default options fields on update
       storage
         .get('options')
-        .then((options) =>
+        .then((options) => {
           storage.set({
             options: {
               ...DefaultOptions,
               ...options,
             },
-          })
-        )
+          });
+
+          return options;
+        })
         .then(() => {
           chrome.tabs.create({ url: 'html/options.html' });
-        });
+        })
+        .then(() => sendAnalyticsOnUpdate());
       break;
   }
 });

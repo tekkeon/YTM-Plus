@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NetworkState } from '../../types';
 import { getLyrics } from '../../util/lyrics';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 const renderLyrics = (lyrics: string[]) => {
   return lyrics.map((lyric) => {
@@ -20,16 +21,35 @@ export default function LyricsPanel() {
     data: null,
     error: null,
   });
+
   const { tabs } = useTabs();
+
+  const sendLyricsFetchedEvent = useSendEvent({ name: 'lyrics_fetched' });
+  const sendLyricsFoundEvent = useSendEvent({ name: 'lyrics_found' });
+  const sendLyricsNotFoundEvent = useSendEvent({ name: 'lyrics_not_found' });
+
   const songInfo = tabs[0]?.songInfo;
   const track = songInfo?.title ?? '';
   const artist = songInfo?.artist ?? '';
 
   useEffect(() => {
+    sendLyricsFetchedEvent();
     setLyrics({ ...lyrics, loading: true });
 
     getLyrics(artist, track)
       .then((lyricsResult) => {
+        if (!lyricsResult) {
+          sendLyricsNotFoundEvent({
+            track,
+            artist,
+          });
+        } else {
+          sendLyricsFoundEvent({
+            track,
+            artist,
+          });
+        }
+
         setLyrics({
           ...lyrics,
           loading: false,

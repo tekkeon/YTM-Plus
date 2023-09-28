@@ -3,7 +3,7 @@ import { messaging, tabs } from '../util/chrome';
 import { Message, PlayerState, SongInfo } from '../types';
 import { MessageType } from '../constants';
 
-interface IEnrichedTab {
+export interface IEnrichedTab {
   tab: chrome.tabs.Tab;
   songInfo: SongInfo | null;
   playerState: PlayerState | null;

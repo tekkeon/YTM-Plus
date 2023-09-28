@@ -6,6 +6,7 @@ import { MessageType } from '../../constants';
 import { Prev, Pause, Play, Next, Volume, Hamburger } from '../Icons';
 import useKeyControls from '../../hooks/useKeyControls';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 const ControlsStyled = styled.div`
   display: flex;
@@ -65,9 +66,15 @@ export default function Controls() {
   const mpContext = useMainPanelContext();
   useKeyControls();
 
+  const sendPlayPauseEvent = useSendEvent({ name: 'play_pause' });
+  const sendNextEvent = useSendEvent({ name: 'next_track' });
+  const sendPrevEvent = useSendEvent({ name: 'prev_track' });
+  const sendQueueEvent = useSendEvent({ name: 'queue_toggle' });
+
   const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
   const onQueueClick = () => {
+    sendQueueEvent();
     mpContext?.setShowQueue(!mpContext.showQueue);
   };
 
@@ -80,14 +87,17 @@ export default function Controls() {
   };
 
   const onPlayPauseClick = () => {
+    sendPlayPauseEvent();
     sendMessageToTabs({ type: MessageType.PLAY_PAUSE });
   };
 
   const onNextClick = () => {
+    sendNextEvent();
     sendMessageToTabs({ type: MessageType.SKIP_TRACK });
   };
 
   const onPrevClick = () => {
+    sendPrevEvent();
     sendMessageToTabs({ type: MessageType.PREVIOUS_TRACK });
   };
 

@@ -4,6 +4,7 @@ import levenshtein from 'fast-levenshtein';
 import config from '../../config';
 import { MessageHandler, SongInfo } from '../../types';
 import { getAccessToken } from '../../util/spotify';
+import { sendEvent } from '../../util/analytics';
 
 type PartialSongInfo = Omit<SongInfo, 'queue' | 'year'>;
 
@@ -14,6 +15,8 @@ export const handleSpotifyToYTM: MessageHandler = async (
   sender,
   sendResponse
 ) => {
+  sendEvent({ name: 'spotify_translated' });
+
   const trackId = payload.trackId;
 
   const accessToken = await getAccessToken(

@@ -6,11 +6,19 @@ import { MiniTheme, Options } from '../../types';
 import ColorSelector from './ColorSelector';
 import { DefaultMiniDarkTheme, DefaultMiniLightTheme } from '../../constants';
 import { TabProvider } from '../../contexts/TabContext';
+import { sendEvent } from '../../util/analytics';
 
 export default function PopupThemeEditor() {
   const { result: options, set } = useStorage<Options>('options');
 
   const handleChange = (id: keyof MiniTheme, newValue: string) => {
+    sendEvent({
+      name: 'mini_theme_changed',
+      params: {
+        theme: 'custom',
+      },
+    });
+
     set({
       ...options,
       miniTheme: {
@@ -26,13 +34,29 @@ export default function PopupThemeEditor() {
     <Container>
       <ThemeOptions>
         <DefaultButton
-          onClick={() => set({ ...options, miniTheme: DefaultMiniDarkTheme })}
+          onClick={() => {
+            sendEvent({
+              name: 'mini_theme_changed',
+              params: {
+                theme: 'default_dark',
+              },
+            });
+            set({ ...options, miniTheme: DefaultMiniDarkTheme });
+          }}
           color="dark"
         >
           Default Dark
         </DefaultButton>
         <DefaultButton
-          onClick={() => set({ ...options, miniTheme: DefaultMiniLightTheme })}
+          onClick={() => {
+            sendEvent({
+              name: 'mini_theme_changed',
+              params: {
+                theme: 'default_light',
+              },
+            });
+            set({ ...options, miniTheme: DefaultMiniLightTheme });
+          }}
           color="light"
         >
           Default Light

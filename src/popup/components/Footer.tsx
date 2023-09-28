@@ -4,9 +4,11 @@ import { MessageType } from '../../constants';
 
 import Controls from './Controls';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 export default function Footer() {
   const { tabs, sendMessageToTabs } = useTabs();
+  const sendTrackScrubbedEvent = useSendEvent({ name: 'track_scrubbed' });
 
   const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
 
@@ -17,6 +19,10 @@ export default function Footer() {
     });
   };
 
+  const onMouseDown = () => {
+    sendTrackScrubbedEvent();
+  };
+
   return (
     <FooterStyled progress={playerState?.progress}>
       <div className="song-progress-container">
@@ -25,6 +31,7 @@ export default function Footer() {
           type="range"
           className="progress-slider"
           onChange={onChange}
+          onMouseDown={onMouseDown}
         ></input>
       </div>
       <Controls />

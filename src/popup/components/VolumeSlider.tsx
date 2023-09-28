@@ -3,19 +3,24 @@ import styled from 'styled-components';
 import { useMainPanelContext } from './MainPanel';
 import { MessageType } from '../../constants';
 import { useTabs } from '../../contexts/TabContext';
+import { useSendEvent } from '../../util/analytics';
 
 export default function VolumeSlider() {
   const mpContext = useMainPanelContext();
-  // const playerState = usePlayerState();
   const { tabs, sendMessageToTabs } = useTabs();
 
   const playerState = useMemo(() => tabs[0]?.playerState, [tabs]);
+  const sendVolumeEvent = useSendEvent({ name: 'volume_changed' });
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     sendMessageToTabs({
       type: MessageType.SET_VOLUME,
       payload: e.target.value,
     });
+  };
+
+  const onMouseDown = () => {
+    sendVolumeEvent();
   };
 
   return (
@@ -30,6 +35,7 @@ export default function VolumeSlider() {
         type="range"
         className="volume-slider"
         onChange={onChange}
+        onMouseDown={onMouseDown}
       ></VolumeSliderInput>
     </VolumeSliderStyled>
   );

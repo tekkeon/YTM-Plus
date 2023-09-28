@@ -1,11 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTabs } from '../../contexts/TabContext';
+import { IEnrichedTab, useTabs } from '../../contexts/TabContext';
 import { Tab } from './Tab';
 import { DefaultMiniDarkTheme } from '../../constants';
+import { useSendEvent } from '../../util/analytics';
 
 export default function SelectTabPanel() {
   const { tabs, setTabs } = useTabs();
+  const sendTabEvent = useSendEvent({
+    name: 'tab_selected',
+  });
+
+  const handleTabClick = (tab: IEnrichedTab) => {
+    setTabs([tab]);
+    sendTabEvent();
+  };
 
   return (
     <StyledSelectTabsPanel>
@@ -22,7 +31,7 @@ export default function SelectTabPanel() {
             albumArtUrl={tab.songInfo?.albumArtUrl}
             isActive={tab.songInfo?.id !== undefined}
             onClick={() => {
-              setTabs([tab]);
+              handleTabClick(tab);
             }}
           />
         ))}
