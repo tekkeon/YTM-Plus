@@ -88,9 +88,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
           return options;
         })
-        .then(() => {
-          chrome.tabs.create({ url: 'html/options.html' });
-        })
         .then(() => sendAnalyticsOnUpdate());
       break;
   }
