@@ -1,6 +1,6 @@
 import { PlayerState, QueueItem, SongInfo } from '../types';
 
-export const getSongInfo = (): SongInfo => {
+export const getSongInfo = (): Omit<SongInfo, 'id'> => {
   const additionalInfo = document
     .querySelector('.byline.ytmusic-player-bar')
     ?.textContent?.split('\u2022');
@@ -13,22 +13,12 @@ export const getSongInfo = (): SongInfo => {
     document.querySelector('.title.ytmusic-player-bar')?.textContent ?? '';
   const year = additionalInfo?.[2]?.trim() ?? '';
 
-  const url =
-    (
-      document.querySelector(
-        'a.ytp-title-link.yt-uix-sessionlink'
-      ) as HTMLElement
-    ).getAttribute('href') ?? '';
-  const urlObj = new URL(url);
-  const id = urlObj.searchParams.get('v') ?? '';
-
   return {
     album,
     albumArtUrl,
     artist,
     queue,
     title,
-    id,
     year,
   };
 };
