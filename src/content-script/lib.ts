@@ -102,7 +102,7 @@ const getQueueItemElementFromWrapperRenderer = (
 };
 
 const getQueueItemElements = (): HTMLElement[] => {
-  const queue = document.querySelector('.side-panel.modular #queue');
+  const queue = document.querySelector('.side-panel #queue');
   const contents = queue?.querySelector('#contents');
 
   const itemNodes = contents?.childNodes;
