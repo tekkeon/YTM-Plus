@@ -15,6 +15,8 @@ export default function Options() {
   const { result: lastFMSession, set: setLastFMSession } =
     useStorage<LastFMSession>('lastfm-info');
 
+  console.log({ options });
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -60,6 +62,22 @@ export default function Options() {
       </h1>
       <div className="settings-page-container">
         <div className="settings-section">
+          <h2>Announcements (2/21/2024)</h2>
+          <ul>
+            <li>
+              The Spotify-to-YTM feature has been temporarily disabled. We are
+              working with Spotify to get it re-enabled, and we apologize for
+              the inconvenience.
+            </li>
+            <li>
+              YTM+ will soon become SynQ, a more polished mini player that will
+              work with multiple other music services! Keep an eye out for it!
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="settings-page-container">
+        <div className="settings-section">
           <h2>Mini Player Theme</h2>
           <PopupThemeEditor />
         </div>
@@ -96,15 +114,6 @@ export default function Options() {
           />
         </div>
         <div className="settings-section">
-          <h2>Spotify</h2>
-          <Option
-            title="Enable Spotify-to-YTM popup"
-            description="Shows a popup on Spotify track links with a quick link to the same song on YouTube Music."
-            checked={options?.spotifyToYTM}
-            onClick={() => handleCheckboxClick('spotifyToYTM')}
-          />
-        </div>
-        <div className="settings-section">
           <h2>LastFM</h2>
           <h3 className="last-fm-user">
             {lastFMSession?.name ? (
@@ -122,6 +131,15 @@ export default function Options() {
           <button className="last-fm-button" onClick={authorizeUser}>
             LastFM Login
           </button>
+        </div>
+        <div className="settings-section">
+          <h2>Spotify</h2>
+          <Option
+            title="Enable Spotify-to-YTM popup"
+            description="Shows a popup on Spotify track links with a quick link to the same song on YouTube Music. NOTE: Spotify has restricted this use case for now. We are actively working to re-enable this feature."
+            checked={false}
+            disabled
+          />
         </div>
       </div>
     </OptionsStyled>
@@ -174,6 +192,17 @@ const OptionsStyled = styled.div`
     & > p {
       font-size: 12px;
       color: rgb(189, 189, 189);
+    }
+
+    & > ul {
+      padding-left: 20px;
+      margin: 0;
+
+      li {
+        font-size: 14px;
+        color: white;
+        margin-bottom: 10px;
+      }
     }
   }
 

@@ -1,12 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface OptionProps {
   checked: boolean;
   description?: string;
-  onClick: () => void;
+  disabled?: boolean;
+  onClick?: () => void;
   title: string;
 }
 
@@ -14,10 +15,11 @@ export default function Option({
   onClick,
   title,
   checked,
+  disabled,
   description,
 }: OptionProps) {
   return (
-    <OptionCheckStyled checked={checked}>
+    <OptionCheckStyled checked={checked} disabled={disabled}>
       <div className="main">
         <div className="checkbox" onClick={onClick}>
           <CheckMarkIcon icon={faCheck} />
@@ -31,9 +33,16 @@ export default function Option({
 
 interface OptionsCheckStyledProps {
   checked: boolean;
+  disabled?: boolean;
 }
 
 const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+    `}
+
   .main {
     display: flex;
     margin: 15px 0;
@@ -45,6 +54,13 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
     font-weight: 500;
     font-family: 'Open Sans', sans-serif;
     line-height: 18px;
+
+    ${(props) =>
+      props.disabled &&
+      css`
+        color: rgb(175, 175, 175);
+        text-decoration: line-through;
+      `}
   }
 
   .check-option-extra {
@@ -59,7 +75,11 @@ const OptionCheckStyled = styled.div<OptionsCheckStyledProps>`
   .checkbox {
     margin: 0px 15px 0px 5px;
     background-color: ${(props) =>
-      props.checked ? 'rgb(232, 72, 68)' : 'white'};
+      props.checked
+        ? props.disabled
+          ? 'rgb(175, 175, 175)'
+          : 'rgb(232, 72, 68)'
+        : 'white'};
     display: inline-block;
     height: 15px;
     width: 15px;

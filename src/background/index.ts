@@ -7,7 +7,7 @@ import {
   handleSpotifyToYTM,
 } from './handlers';
 import { LastFMSession, Options } from '../types';
-import { Event, sendEvent, sendEvents } from '../util/analytics';
+import { Event, sendEvents } from '../util/analytics';
 
 const injectContentScriptOnInstall = () => {
   const contentScripts = chrome.runtime.getManifest().content_scripts;
