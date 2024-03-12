@@ -1,3 +1,5 @@
+### ⚠️ YTM+ has been upgraded to SynQ, supporting more services and adding more features. Check it out here: https://github.com/SynQApp/Extension
+
 # [YTM+ for YouTube Music](https://chrome.google.com/webstore/detail/ytm%2B-for-youtube-music/jcdmcpefbebkldopabclefjaggejocff)
 
 YTM+ for YouTube Music is a Chrome extension designed to make YouTube Music a more enjoyable experience. The extension was originally built as just a mini player in the browser, but has grown to include features like lyrics, themes, notification, and other integrations with LastFM and Spotify.
